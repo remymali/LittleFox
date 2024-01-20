@@ -30,8 +30,15 @@ export const userApiSlice = apiSlice.injectEndpoints({
           body: data,
         }),
       }),
+      verifyOTP: builder.mutation({
+        query: (data) => ({
+          url: `${USERS_URL}/verifyOTP`,
+          method: 'POST',
+          body: data,
+        }),
+      }),
   }),
 });
 
-export const { useLoginMutation, useLogoutMutation, useRegisterMutation ,useUpdateUserMutation} =
+export const { useLoginMutation, useLogoutMutation, useRegisterMutation ,useUpdateUserMutation,useVerifyOTPMutation} =
   userApiSlice;

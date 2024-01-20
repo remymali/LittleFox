@@ -1,6 +1,9 @@
 import asyncHandler from 'express-async-handler'
 import User from '../models/userModel.js'
 import generateToken from '../utils/generateToken.js'
+import  otpGenerator  from'otp-generator'
+import generateOTP from '../utils/generateOTP.js'
+import sendOtpEmail from '../utils/sendOtpEmail.js'
 
 
 //@des  Auth user/set token
@@ -8,16 +11,34 @@ import generateToken from '../utils/generateToken.js'
 //@access Public
 const authUser = asyncHandler(async (req, res) => {
     const {email,password}=req.body
+    console.log("req.body>>",req.body)
     const user=await User.findOne({email})
 
     if (user && (await user.matchPassword(password))) {
+        
         generateToken(res,user._id)
+       
+        let otp=otpGenerator.generate(6,{
+            upperCaseAlphabets: false,
+            lowerCaseAlphabets: false,
+            specialChars: false,
+        });
+        //const otp = generateOTP();
+        console.log("OTP>>",user)
+        user.otp = otp;
+        await user.save();        
+         // Send OTP via email
+        sendOtpEmail(email, otp);
         res.status(201).json({
             _id: user._id,
             name: user.name,
             email: user.email,
-            role: user.role
+            role: user.role,
+            message: 'OTP sent successfully'
         })
+
+       // res.status(200).json({ message: 'OTP sent successfully' });
+       
     }
     else {
         res.status(401)

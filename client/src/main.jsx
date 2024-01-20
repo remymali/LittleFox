@@ -10,19 +10,19 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import HomeScreen from './screens/HomeScreen.jsx';
-import LoginScreen from './screens/LoginScreen.jsx';
 import RegisterScreen from './screens/RegisterScreen.jsx';
 import ProfileScreen from './screens/ProfileScreen.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css'
 import About from './screens/About.jsx'
+import UserLogin from './screens/UserLogin.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
       <Route index={true} path='/' element={<HomeScreen/>} />
-      <Route path='/login' element={<LoginScreen/>} />
+      <Route path='/login' element={<UserLogin/>} />
       <Route path='/register' element={<RegisterScreen/>} />
       <Route path='/about' element={<About/>} />
       <Route path='' element={<PrivateRoute />}>
