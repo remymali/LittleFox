@@ -9,6 +9,7 @@ const Hero = () => {
       src='/images/LittleFox.jpg'  // Add .default here
       style={{width:150 ,height:100}}
     />
+          
           <h1 className='text-center mb-4'>LITTLE-FOX KINDERGARTEN</h1>
           <p className='text-center mb-4'>
             Welcome to Little-Fox kindergarten

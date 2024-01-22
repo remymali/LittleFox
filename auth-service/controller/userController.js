@@ -5,7 +5,34 @@ import  otpGenerator  from'otp-generator'
 import generateOTP from '../utils/generateOTP.js'
 import sendOtpEmail from '../utils/sendOtpEmail.js'
 
+//verifyOTP
+const verifyOTP=asyncHandler(async(req,res)=>{
+    const {email,otp}=req.body     
+    console.log(req.body)
 
+    if(!otp)
+    {
+        res.status(400).json({message:"OTP is required"})
+    }
+    const  user=await User.findOne({email}).limit(1)
+    if (!user) {
+        res.status(400).json({ message: "User not found with the provided email" });
+        return; // Add a return statement to stop execution
+      }
+      console.log(user)
+    if(otp===user.otp)
+    {
+    res.status(201).json({_id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        message:"OTP verification successful"})  
+    }
+    else
+    {
+    res.status(400).json({message:"OTP entered is not valid."})
+    }
+})
 //@des  Auth user/set token
 //route POST  post/api/users/auth
 //@access Public
@@ -28,12 +55,9 @@ const authUser = asyncHandler(async (req, res) => {
         user.otp = otp;
         await user.save();        
          // Send OTP via email
-        sendOtpEmail(email, otp);
+        //sendOtpEmail(email, otp);
         res.status(201).json({
-            _id: user._id,
-            name: user.name,
-            email: user.email,
-            role: user.role,
+            
             message: 'OTP sent successfully'
         })
 
@@ -138,6 +162,7 @@ export {
     authUser,
     registerUser,
     logoutUser,
-    getUserProfile,
-    updateUserProfile
+    getUserProfile,   
+    updateUserProfile,
+    verifyOTP
 };

@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import FormContainer from '../components/formContainer.jsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLoginMutation, useVerifyOTPMutation } from '../slices/usersApiSlice.js';
+import { useLoginMutation} from '../slices/usersApiSlice.js';
 import { setCredentials } from '../slices/authSlice.js';
 import Loader from '../components/Loader.jsx'
 import { toast } from 'react-toastify';
@@ -11,47 +11,30 @@ import { toast } from 'react-toastify';
 const UserLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [otp, setOtp] = useState('');
-  const [step, setStep] = useState(1);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [login, { isLoading }] = useLoginMutation();
-  const [verifyOTP,{isLoadings}]=useVerifyOTPMutation();
 
   const { userInfo } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    console.log(step)
     navigate('/login')
-  },[userInfo,[step]]);
+  },[]);
 
  
-  const handleVerifyOTP = async () => {
-    try {
-      // Step 2: Verify OTP
-      const res = await verifyOTP({ email, otp}).unwrap();
-      if (response.data.message === 'OTP verification successful') {
-
-        // Redirect to the landing page or perform any necessary actions
-        console.log('OTP verification successful');
-      }
-    } catch (error) {
-      console.error('OTP verification error:', error);
-    }
-  };
   //code added
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
     try {
       // Step 1: Verify Password and Send OTP
       const res = await login({ email, password}).unwrap();
-      console.log("res>>",res.role)
+      console.log("res>>",res)
       dispatch(setCredentials({ ...res }));
       if (res.message === 'OTP sent successfully') {
         console.log('OTP sent successfully');
-        setStep(2); // Move to Step 2 for OTP input
-        console.log("step>>",step)
+        navigate('/OtpVerification', { state: { email } });
       }
     } catch (error) {
       console.error('Login error:', error);
@@ -59,8 +42,8 @@ const UserLogin = () => {
   };
   return (
     <div>
-      {step === 1 ? (
-        // Step 1: Email and Password Input
+     
+         {/* Email and Password Input */}
         <FormContainer>
       <h1>Login</h1>
 
@@ -103,41 +86,7 @@ const UserLogin = () => {
         </Col>
       </Row> */}
     </FormContainer>
-      ) : (
-        // Step 2: OTP Input
-        <FormContainer>
-      <h1>Enter OTP:</h1>
-
-      <Form onSubmit={handleVerifyOTP}>
-        <Form.Group className='my-2' controlId='password'>
-          <Form.Label>OTP</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='Enter OTP'
-            value={otp}
-            onChange={(e) =>setOtp(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
-
-        <Button
-          disabled={isLoadings}
-          type='submit'
-          variant='primary'
-          className='mt-3'
-        >
-          Verify OTP
-        </Button>
-      </Form>
-
-      {  isLoadings && <Loader />}
-
-      {/* <Row className='py-3'>
-        <Col>
-          resend OTP? <Link to='/register'>Register</Link>
-        </Col>
-      </Row> */}
-    </FormContainer>
-      )}
+      
     </div>
   
   );
