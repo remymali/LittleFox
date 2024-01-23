@@ -43,7 +43,7 @@ const authUser = asyncHandler(async (req, res) => {
 
     if (user && (await user.matchPassword(password))) {
         
-        generateToken(res,user._id)
+        generateToken(res,user._id,user.role)
        
         let otp=otpGenerator.generate(6,{
             upperCaseAlphabets: false,

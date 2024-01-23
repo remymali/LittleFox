@@ -1,0 +1,23 @@
+/* Example styles for NotFound.css */
+body {
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    
+    margin: 0;
+  }
+  
+  .NotFound {
+   margin-left: 20rem; 
+            margin-top: 10rem; 
+            width: 500px; 
+            height: 300px; 
+            align-items: center;
+            text-align: center;
+            background-color: lightgray; 
+            padding-top: 5rem; 
+            box-sizing: border-box; 
+            border: 2px solid rgb(21, 20, 20); 
+  }
+  
+  

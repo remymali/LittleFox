@@ -13,26 +13,42 @@ import HomeScreen from './screens/HomeScreen.jsx';
 import RegisterScreen from './screens/RegisterScreen.jsx';
 import ProfileScreen from './screens/ProfileScreen.jsx'; 
 import OtpVerification from './screens/OtpVerification.jsx'
-import UserLandingPage from './screens/UserLandingPage.jsx'
+import UserLandingPage from './screens/UserLandingPage.jsx' 
+import AdminLogin from './screens/AdminLogin.jsx'
 import PrivateRoute from './components/PrivateRoute.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css'
 import About from './screens/About.jsx'
 import UserLogin from './screens/UserLogin.jsx'
+import Admin_Student from './screens/Admin_Student.jsx'
+import NotFoundPage from './screens/NotFoundPage.jsx'
+import AuthorizedRoute from './components/AuthorizedRoute.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
       <Route index={true} path='/' element={<HomeScreen/>} />
+      {/* User details */}
       <Route path='/login' element={<UserLogin/>} />
       <Route path='/OtpVerification' element={<OtpVerification/>} />
-      <Route path='/register' element={<RegisterScreen/>} />
       <Route path='/about' element={<About/>} />
+
       <Route path='' element={<PrivateRoute />}>
       <Route path='/userLandingPage' element={<UserLandingPage />} />
-        <Route path='/Profile' element={<ProfileScreen />} />
+        {/* <Route path='/Profile' element={<ProfileScreen />} /> */}
         <Route path='/editProfile' element={<ProfileScreen />} />
       </Route>
+      {/* Admin details */}
+      <Route path=''  element={<AuthorizedRoute/>}>
+            <Route path='/register' element={<RegisterScreen/>} />
+            <Route path='/student' element={<Admin_Student /> } />      
+            <Route path='/Profile' element={<ProfileScreen />} />
+      </Route>
+
+      <Route path='*' element={<NotFoundPage/>}/>
+
+     
+      
     </Route>
   )
 );

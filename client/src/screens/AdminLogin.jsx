@@ -3,12 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import FormContainer from '../components/formContainer.jsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLoginMutation} from '../slices/usersApiSlice.js';
+import { useLoginMutation } from '../slices/usersApiSlice.js';
 import { setCredentials } from '../slices/authSlice.js';
 import Loader from '../components/Loader.jsx'
 import { toast } from 'react-toastify';
 
-const UserLogin = () => {
+const AdminLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -20,35 +20,28 @@ const UserLogin = () => {
   const { userInfo } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    navigate('/login')
-  },[]);
+    if (userInfo) {
+      navigate('/');
+    }
+  },[navigate, userInfo]);
 
- 
-  //code added
-  const handleLogin = async (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      // Step 1: Verify Password and Send OTP
       const res = await login({ email, password}).unwrap();
-      console.log("res>>",res)
+      console.log("res>>",res.role)
       dispatch(setCredentials({ ...res }));
-      if (res.message === 'OTP sent successfully') {
-        console.log("haell")
-        console.log('OTP sent successfully');
-        navigate('/OtpVerification', { state: { email } });
-      }
-    } catch (error) {
-      console.error('Login error:', error);
+      navigate('/');
+    } catch (err) {
+        toast.error(err?.data?.message || err.error);
     }
   };
-  return (
-    <div>
-     
-         {/* Email and Password Input */}
-        <FormContainer>
-      <h1>Login</h1>
 
-      <Form onSubmit={handleLogin}>
+  return (
+    <FormContainer>
+      <h1>Sign In</h1>
+
+      <Form onSubmit={submitHandler}>
         <Form.Group className='my-2' controlId='email'>
           <Form.Label>Email Address</Form.Label>
           <Form.Control
@@ -75,22 +68,19 @@ const UserLogin = () => {
           variant='primary'
           className='mt-3'
         >
-         Send OTP
+          Sign In
         </Button>
       </Form>
 
       {  isLoading && <Loader />}
 
-      {/* <Row className='py-3'>
+      <Row className='py-3'>
         <Col>
           New Customer? <Link to='/register'>Register</Link>
         </Col>
-      </Row> */}
+      </Row>
     </FormContainer>
-      
-    </div>
-  
   );
 };
 
-export default UserLogin;
+export default AdminLogin;
