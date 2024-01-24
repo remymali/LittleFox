@@ -22,6 +22,7 @@ import About from './screens/About.jsx'
 import UserLogin from './screens/UserLogin.jsx'
 import Admin_Student from './screens/Admin_Student.jsx'
 import NotFoundPage from './screens/NotFoundPage.jsx'
+import Admin_StudRegistration  from './screens/Admin_StudRegistration.jsx'
 import AuthorizedRoute from './components/AuthorizedRoute.jsx'
 
 const router = createBrowserRouter(
@@ -41,6 +42,7 @@ const router = createBrowserRouter(
       {/* Admin details */}
       <Route path=''  element={<AuthorizedRoute/>}>
             <Route path='/register' element={<RegisterScreen/>} />
+            <Route path='/studRegister' element={<Admin_StudRegistration/>}/>
             <Route path='/student' element={<Admin_Student /> } />      
             <Route path='/Profile' element={<ProfileScreen />} />
       </Route>

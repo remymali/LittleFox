@@ -5,7 +5,7 @@ import {useNavigate} from 'react-router-dom'
 const Admin_Student = () => {
   const navigate=useNavigate();
   const handleStudentAdding=()=>{
-    navigate('/register')
+    navigate('/studRegister')
   }
   return (
 

@@ -51,11 +51,11 @@ const authUser = asyncHandler(async (req, res) => {
             specialChars: false,
         });
         //const otp = generateOTP();
-        console.log("OTP>>",otp)
+        console.log("OTP>>",user)
         user.otp = otp;
         await user.save();        
          // Send OTP via email
-        sendOtpEmail(email, otp);
+        //sendOtpEmail(email, otp);
         res.status(201).json({
             
             message: 'OTP sent successfully'

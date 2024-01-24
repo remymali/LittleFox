@@ -18,6 +18,15 @@ const userSchema =mongoose.Schema({
         type:String,
         require: true,
     },
+    otp: {
+        type: String,
+        default: null,
+      },
+    isOtpVerified: {
+        type: Boolean,
+        default: false,
+    },
+    
 },{
     timestamps: true
 });

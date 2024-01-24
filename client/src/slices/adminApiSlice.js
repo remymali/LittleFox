@@ -10,9 +10,16 @@ export const adminApiSlice = apiSlice.injectEndpoints({
         method: 'GET',
       }),
     }),
+    studRegister: builder.mutation({
+      query: (userData) => ({
+        url: `${ADMIN_USERS_URL}/studRegister`,
+        method: 'POST',
+        body: userData,
+      }),
+    }),
     createUser: builder.mutation({
       query: (userData) => ({
-        url: ADMIN_USERS_URL,
+        url: `${ADMIN_USERS_URL}`,
         method: 'POST',
         body: userData,
       }),
@@ -37,5 +44,6 @@ export const {
   useGetUsersQuery,
   useCreateUserMutation,
   useDeleteUserMutation,
-  useEditUserMutation,
+  useEditUserMutation,  
+  useStudRegisterMutation,
 } = adminApiSlice;

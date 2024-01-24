@@ -1,50 +1,51 @@
 import mongoose  from 'mongoose';
 
 const studentSchema = new mongoose.Schema({
-  studentInfo: {
-    fullName: { type: String, required: true },
-    dateOfBirth: { type: Date, required: true },
-    gender: { type: String, enum: ['Male', 'Female', 'Other'], required: true },
-    nationality: { type: String, required: true },
-    placeOfBirth: { type: String, required: true },
-    homeAddress: { type: String, required: true },
-    contactNumber: { type: String, required: true },
-    emailAddress: { type: String },
+    name: { type: String },
+    dateOfBirth: { type: Date },
+    gender: { type: String, enum: ['Male', 'Female', 'Other'] },
+    nationality: { type: String  },
+    placeOfBirth: { type: String },
+    homeAddress: { type: String },
+    contactNumber: { type: String},
+    email: { type: String },
+    password:{type: String },
+    role:{type:String},
     class: {
-        className: { type: String, required: true },
+        className: { type: String},
     teacher: {
-      teacherName: { type: String, required: true },
-      teacherEmail: { type: String, required: true },
+      teacherName: { type: String },
+      teacherEmail: { type: String },
             },
          },
-    admissionNumber: { type: String, required: true ,unique:true},
-    dateOfJoin: { type: String, required: true },
+    admissionNumber: { type: String,unique:true},
+    dateOfJoin: { type: String },
     Exam: [
       {
-        examName: { type: String, required: true },
-        examDate: { type: Date, required: true },
+        examName: { type: String },
+        examDate: { type: Date },
         subjects: [
           {
-            subjectName: { type: String, required: true },
-            marks: { type: Number, required: true },
+            subjectName: { type: String},
+            marks: { type: Number },
           },
         ],
       },
     ],
     Attendance: [
       {
-        date: { type: Date, required: true },
-        status: { type: String, enum: ['Present', 'Absent'], required: true },
+        date: { type: Date },
+        status: { type: String, enum: ['Present', 'Absent'] },
       },
     ],
     Activity: [
       {
-        activityName: { type: String, required: true },
-        activityDate: { type: Date, required: true },
+        activityName: { type: String },
+        activityDate: { type: Date },
         description: { type: String },
       },
     ],
-  },
+  
 });
 
 const Student = mongoose.model('Student', studentSchema);

@@ -24,4 +24,14 @@ const protect=asycHandler(async (req,res,next)=>{
     }
 })
 
-export { protect };
+const isAdmin=asycHandler((req,res,next)=>{
+if(req.user.role==="admin")
+{
+    next();
+}
+else{
+    req.status(401);
+    throw new Error('Not authorized, no token')
+}
+})
+export { protect,isAdmin };
