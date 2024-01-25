@@ -1,12 +1,13 @@
 import asyncHandler from 'express-async-handler'
 import Student from  '../models/studentModel.js'
+import Teacher from '../models/teacherModel.js';
 import User from '../models/userModel.js';
 
 
 //get student details
 const getStudents=asyncHandler(async(req,res)=>{
 try {
-    const users= await User.find({role:"student"});
+    const users= await Student.find({role:"student"});
 
     res.status(200).json(users)
 } catch (error) {
@@ -21,6 +22,7 @@ const studRegister = asyncHandler(async (req, res) => {
     const { name, email, password,role } = req.body
     console.log(req.body)
     const userExist = await Student.findOne({ email })
+    console.log(userExist)
 
     if (userExist) {
         console.log('userexist')
@@ -28,11 +30,17 @@ const studRegister = asyncHandler(async (req, res) => {
         throw new Error("User already exists")
     }
 
-    const user = await User.create({
+    const user = await Student.create({
         name,
         email,
         password,
-        role
+        role:'student'
+    })
+    await User.create({
+        name,
+        email,
+        password,
+        role:'student'
     })
 
     // await User.create({
@@ -55,8 +63,21 @@ const studRegister = asyncHandler(async (req, res) => {
         res.status(400)
         throw new Error("Invalid user data")
     }
-}
+})
+//Teacher
 
-)
+//get Teacher details
+const getTeachers=asyncHandler(async(req,res)=>{
+    try {
+        const teachers= await Teacher.find({role:"teacher"});
+        console.log("teachers",teachers);
+        res.status(200).json(teachers)
+    } catch (error) {
+        res.status(400).json({message:error.message})
+    }
+    })  
+   
 
-export {getStudents,studRegister}
+    
+
+export {getStudents,studRegister,getTeachers}

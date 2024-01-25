@@ -27,7 +27,7 @@ const AdminHeader = ({ userInfo, logoutHandler }) => (
   <LinkContainer to='/student'>
         <Nav.Link><FaSignInAlt /> Student</Nav.Link>
   </LinkContainer>
-  <LinkContainer to='/admin-teacher'>
+  <LinkContainer to='/teacher'>
         <Nav.Link><FaSignInAlt /> Teacher</Nav.Link>
   </LinkContainer>
     <NavDropdown title={userInfo.name} id='username'>      

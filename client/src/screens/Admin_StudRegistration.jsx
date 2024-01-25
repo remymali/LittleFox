@@ -1,48 +1,48 @@
-import { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Form, Button, Row, Col } from 'react-bootstrap';
-import FormContainer from '../components/formContainer';
+import React, { useState, useEffect } from 'react';
+import { Form, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {useCreateUserMutation } from '../slices/adminApiSlice.js';
+import { useCreateUserMutation } from '../slices/adminApiSlice.js';
 import { setCredentials } from '../slices/authSlice';
 import Loader from '../components/Loader';
 import { toast } from 'react-toastify';
-
+import FormContainer from '../components/formContainer';
+import './Admin_Student.jsx'
 
 const Admin_StudRegistration = () => {
-const [name, setName] = useState('');
-const [email, setEmail] = useState('');
-const [password, setPassword] = useState('');
-const [confirmPassword, setConfirmPassword] = useState('');
-const [role, setRole] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-const dispatch = useDispatch();
-const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  const { userInfo } = useSelector((state) => state.auth);
+  const [createUser, { isLoading }] = useCreateUserMutation();
 
+  useEffect(() => {
+    if (userInfo) {
+      // Redirect to a different route or handle authentication differently
+      navigate('/studRegister');
+    }
+  }, [navigate, userInfo]);
 
-const { userInfo } = useSelector((state) => state.auth);
-const [createUser, { isLoading }] = useCreateUserMutation();
-
-useEffect(() => {
-  if (userInfo) {
-    navigate('/studRegister');
-  }
-}, [navigate, userInfo]);
-
-const submitHandler = async (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      toast.error('Passwords do not match');
-    } else {
-      try {    
-        const res = await createUser({ name, email, password,role }).unwrap();
-        console.log("res>>",res)
-        dispatch(setCredentials({ ...res }));
-        navigate('/');
-      } catch (err) {
-        toast.error(err?.data?.message || err.error);
-      }
+    
+    // Client-side form validation
+    if (!name || !email || !password ) {
+      toast.error('All fields are required.');
+      return;
+    }
+
+    try {
+      const res = await createUser({ name, email, password }).unwrap();
+      //dispatch(setCredentials({ ...res }));
+      // Redirect to a different route after successful registration
+      navigate('/student');
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
     }
   };
 
@@ -50,65 +50,43 @@ const submitHandler = async (e) => {
     <FormContainer>
       <h1>Register</h1>
       <Form onSubmit={submitHandler}>
-        <Form.Group className='my-2' controlId='name'>
+        <Form.Group controlId='name'>
           <Form.Label>Student Name</Form.Label>
           <Form.Control
-            type='name'
+            type='text'
             placeholder='Enter name'
             value={name}
             onChange={(e) => setName(e.target.value)}
-          ></Form.Control>
+          />
         </Form.Group>
 
-        <Form.Group className='my-2' controlId='email'>
+        <Form.Group controlId='email'>
           <Form.Label>Email Address</Form.Label>
           <Form.Control
             type='email'
             placeholder='Enter email'
             value={email}
-            onChange={(e) => setEmail(e.target.value)}  
-            /></Form.Group>
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </Form.Group>
 
-        <Form.Group className='my-2' controlId='password'>
+        <Form.Group controlId='password'>
           <Form.Label>Password</Form.Label>
           <Form.Control
             type='password'
             placeholder='Enter password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
-        <Form.Group className='my-2' controlId='confirmPassword'>
-          <Form.Label>Confirm Password</Form.Label>
-          <Form.Control
-            type='password'
-            placeholder='Confirm password'
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
-        <Form.Group className='my-2' controlId='role'>
-          <Form.Label>Role</Form.Label>
-          <Form.Control
-            type='role'
-            placeholder='Role'
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-          ></Form.Control>
+          />
         </Form.Group>
 
-        {isLoading && <Loader/>}
+
+        {isLoading && <Loader />}
 
         <Button type='submit' variant='primary' className='mt-3'>
           Register
         </Button>
       </Form>
-
-      <Row className='py-3'>
-        <Col>
-          Already have an account? <Link to={`/login`}>Login</Link>
-        </Col>
-      </Row>
     </FormContainer>
   );
 };

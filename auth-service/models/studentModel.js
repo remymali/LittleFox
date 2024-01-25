@@ -1,63 +1,65 @@
-import mongoose  from 'mongoose';
+import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 
 const studentSchema = new mongoose.Schema({
-    name: { type: String },
-    dateOfBirth: { type: Date },
-    gender: { type: String, enum: ['Male', 'Female', 'Other'] },
-    nationality: { type: String  },
-    placeOfBirth: { type: String },
-    homeAddress: { type: String },
-    contactNumber: { type: String},
-    email: { type: String },
-    password:{type: String ,default :'1234'},
-    role:{type:String},
-    class: {
-        className: { type: String},
+  name: { type: String, required: true },
+  dateOfBirth: { type: Date },
+  gender: { type: String, enum: ['Male', 'Female'] },
+  nationality: { type: String },
+  placeOfBirth: { type: String },
+  homeAddress: { type: String },
+  contactNumber: { type: String },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  role: { type: String },
+  class: {
+    className: { type: String },
     teacher: {
       teacherName: { type: String },
       teacherEmail: { type: String },
-            },
-         },
-    admissionNumber: { type: String},
-    dateOfJoin: { type: String },
-    Exam: [
-      {
-        examName: { type: String },
-        examDate: { type: Date },
-        subjects: [
-          {
-            subjectName: { type: String},
-            marks: { type: Number },    
-          },
-        ],
-      },
-    ],
-    Attendance: [
-      {
-        date: { type: Date },
-        status: { type: String, enum: ['Present', 'Absent'] },
-      },
-    ],
-    Activity: [
-      {
-        activityName: { type: String },
-        activityDate: { type: Date },
-        description: { type: String },
-      },
-    ],
-  
+    },
+  },
+  dateOfJoin: { type: Date },
+  exams: [
+    {
+      examName: { type: String },
+      examDate: { type: Date },
+      subjects: [
+        {
+          subjectName: { type: String },
+          marks: { type: Number },
+        },
+      ],
+    },
+  ],
+  attendance: [
+    {
+      date: { type: Date },
+      status: { type: String, enum: ['Present', 'Absent'] },
+    },
+  ],
+  activities: [
+    {
+      activityName: { type: String },
+      activityDate: { type: Date },
+      description: { type: String },
+    },
+  ],
 });
 
-studentSchema.pre('save',async function(next){
-  if(!this.isModified('password'))
-  {
-      next();
+studentSchema.pre('save', async function (next) {
+  try {
+    if (!this.isModified('password')) {
+      return next();
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    return next();
+  } catch (error) {
+    return next(error);
   }
-
-  const salt=await bcrypt.genSalt(10);
-  this.password =await bcrypt.hash(this.password,salt);
 });
-
 
 const Student = mongoose.model('Student', studentSchema);
 

@@ -21,6 +21,7 @@ import './index.css'
 import About from './screens/About.jsx'
 import UserLogin from './screens/UserLogin.jsx'
 import Admin_Student from './screens/Admin_Student.jsx'
+import Admin_Teacher from './screens/Admin_Teacher.jsx'
 import NotFoundPage from './screens/NotFoundPage.jsx'
 import Admin_StudRegistration  from './screens/Admin_StudRegistration.jsx'
 import AuthorizedRoute from './components/AuthorizedRoute.jsx'
@@ -36,7 +37,7 @@ const router = createBrowserRouter(
 
       <Route path='' element={<PrivateRoute />}>
       <Route path='/userLandingPage' element={<UserLandingPage />} />
-        {/* <Route path='/Profile' element={<ProfileScreen />} /> */}
+        <Route path='/Profile' element={<ProfileScreen />} />
         <Route path='/editProfile' element={<ProfileScreen />} />
       </Route>
       {/* Admin details */}
@@ -44,6 +45,7 @@ const router = createBrowserRouter(
             <Route path='/register' element={<RegisterScreen/>} />
             <Route path='/studRegister' element={<Admin_StudRegistration/>}/>
             <Route path='/student' element={<Admin_Student /> } />      
+            <Route path='/teacher' element={<Admin_Teacher/>}/>
             <Route path='/Profile' element={<ProfileScreen />} />
       </Route>
 

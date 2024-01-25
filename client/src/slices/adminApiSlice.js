@@ -37,6 +37,32 @@ export const adminApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    getTeachers: builder.query({
+      query: () => ({
+        url: `${ADMIN_USERS_URL}/teacher`,
+        method: 'GET',
+      }),
+    }),
+    createTeacher: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `${ADMIN_USERS_URL}/${id}`,
+        method: 'PUT',
+        body: data,
+      }),
+    }),
+    deleteTeacher: builder.mutation({
+      query: (id) => ({
+        url: `${ADMIN_USERS_URL}/${id}`,
+        method: 'DELETE',
+      }),
+    }),
+    editTeacher: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `${ADMIN_USERS_URL}/${id}`,
+        method: 'PUT',
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -46,4 +72,8 @@ export const {
   useDeleteUserMutation,
   useEditUserMutation,  
   useStudRegisterMutation,
+  useGetTeachersQuery,
+  useCreateTeacherMutation,
+  useEditTeacherMutation,
+  useDeleteTeacherMutation
 } = adminApiSlice;
