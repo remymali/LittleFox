@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import FormContainer from '../components/formContainer.jsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { useVerifyOTPMutation } from '../slices/usersApiSlice.js';
+import { useVerifyOTPMutation } from '../slices/authApiSlice.js';
 import { setCredentials } from '../slices/authSlice.js';
 import Loader from '../components/Loader.jsx';
 import { useNavigate, useLocation } from 'react-router-dom';

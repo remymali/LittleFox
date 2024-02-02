@@ -25,6 +25,7 @@ import Admin_Teacher from './screens/Admin_Teacher.jsx'
 import NotFoundPage from './screens/NotFoundPage.jsx'
 import Admin_StudRegistration  from './screens/Admin_StudRegistration.jsx'
 import AuthorizedRoute from './components/AuthorizedRoute.jsx'
+import Admin_TeachRegister from './screens/Admin_TeachRegister.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -44,7 +45,8 @@ const router = createBrowserRouter(
       <Route path=''  element={<AuthorizedRoute/>}>
             <Route path='/register' element={<RegisterScreen/>} />
             <Route path='/studRegister' element={<Admin_StudRegistration/>}/>
-            <Route path='/student' element={<Admin_Student /> } />      
+            <Route path='/student' element={<Admin_Student /> } /> 
+            <Route path='/teachRegister' element={< Admin_TeachRegister/>}/>     
             <Route path='/teacher' element={<Admin_Teacher/>}/>
             <Route path='/Profile' element={<ProfileScreen />} />
       </Route>

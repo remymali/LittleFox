@@ -6,7 +6,7 @@ import {useNavigate} from 'react-router-dom'
 const Admin_Teacher = () => {
   const navigate=useNavigate();
   const handleTeacherAdding=()=>{
-    navigate('/teacher')
+    navigate('/teachRegister')
   }
   return (
 

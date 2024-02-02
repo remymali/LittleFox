@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 const UserTable = () => {
   const { userInfo } = useSelector((state) => state.auth);
   const { data: users, isLoading, error, refetch } = useGetUsersQuery();
-console.log(users)
+  console.log(users)
   useEffect(() => {
     refetch();
   }, [refetch]);
@@ -54,6 +54,7 @@ console.log(users)
           <th>ID</th>
           <th>Name</th>
           <th>Email</th>
+          <th>Photo</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -61,6 +62,7 @@ console.log(users)
         (isLoading || error) ? (
           <tbody>
             <tr>
+              <td>{isLoading ? 'Loading...' : 'Error...'}</td>
               <td>{isLoading ? 'Loading...' : 'Error...'}</td>
               <td>{isLoading ? 'Loading...' : 'Error...'}</td>
               <td>{isLoading ? 'Loading...' : 'Error...'}</td>
@@ -92,6 +94,17 @@ console.log(users)
                     />
                   ) : (
                     user.email
+                  )}
+                </td>
+                <td>
+                  {editedUserId === user._id ? (
+                    <input
+                      type="text"
+                      value={editedUserData.profileImg || user.profileImg}
+                      onChange={(e) => setEditedUserData({ ...editedUserData, profileImg: e.target.value })}
+                    />
+                  ) : (
+                    <img src={`/profileImg/${user.profileImg}`} alt="Profile" style={{ width: '100px', height: '100px' }} />
                   )}
                 </td>
                 <td>

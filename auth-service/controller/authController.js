@@ -43,7 +43,7 @@ const authUser = asyncHandler(async (req, res) => {
 
     if (user && (await user.matchPassword(password))) {
         
-        generateToken(res,user._id,user.role)
+        generateToken(res,user._id,user.role,user.email)
        
         let otp=otpGenerator.generate(6,{
             upperCaseAlphabets: false,
@@ -111,6 +111,7 @@ const registerUser = asyncHandler(async (req, res) => {
 //route POST  post/api/users/logout
 //@access Public
 const logoutUser = asyncHandler(async (req, res) => {
+    console.log("outout")
     res.cookie('jwt','',{
         httpOnly:true,
         expires:new Date(0)

@@ -4,7 +4,7 @@ import { FaSignInAlt, FaSignOutAlt } from 'react-icons/fa';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useLogoutMutation } from '../slices/usersApiSlice';
+import { useLogoutMutation } from '../slices/authApiSlice';
 import { logout } from '../slices/authSlice';
 import Logo from './Logo';
 

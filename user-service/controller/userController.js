@@ -1,9 +1,7 @@
 import asyncHandler from 'express-async-handler'
-import User from '../models/userModel.js'
+import User from '../models/adminModel.js'
 import generateToken from '../utils/generateToken.js'
-import  otpGenerator  from'otp-generator'
-import generateOTP from '../utils/generateOTP.js'
-import sendOtpEmail from '../utils/sendOtpEmail.js'
+import otpGenerator  from'otp-generator'
 
 //verifyOTP
 const verifyOTP=asyncHandler(async(req,res)=>{
