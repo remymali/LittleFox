@@ -24,10 +24,16 @@ export const adminApiSlice = apiSlice.injectEndpoints({
         body: userData,
       }),
     }),
-    deleteUser: builder.mutation({
+    disableUser: builder.mutation({
       query: (id) => ({
-        url: `${ADMIN_USERS_URL}/${id}`,
-        method: 'DELETE',
+        url: `${ADMIN_USERS_URL}/disableStudent/${id}`,
+        method: 'PUT',
+      }),
+    }),
+    enableUser: builder.mutation({
+      query: (id) => ({
+        url: `${ADMIN_USERS_URL}/enableStudent/${id}`,
+        method: 'PUT',
       }),
     }),
     editUser: builder.mutation({
@@ -69,7 +75,8 @@ export const adminApiSlice = apiSlice.injectEndpoints({
 export const {
   useGetUsersQuery,
   useCreateUserMutation,
-  useDeleteUserMutation,
+  useDisableUserMutation,
+  useEnableUserMutation,
   useEditUserMutation,  
   useStudRegisterMutation,
   useGetTeachersQuery,

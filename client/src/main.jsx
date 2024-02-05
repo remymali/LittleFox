@@ -14,18 +14,19 @@ import RegisterScreen from './screens/RegisterScreen.jsx';
 import ProfileScreen from './screens/ProfileScreen.jsx'; 
 import OtpVerification from './screens/OtpVerification.jsx'
 import UserLandingPage from './screens/UserLandingPage.jsx' 
-import AdminLogin from './screens/AdminLogin.jsx'
 import PrivateRoute from './components/PrivateRoute.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css'
 import About from './screens/About.jsx'
 import UserLogin from './screens/UserLogin.jsx'
-import Admin_Student from './screens/Admin_Student.jsx'
-import Admin_Teacher from './screens/Admin_Teacher.jsx'
+import Admin_Student from './screens/Admin/Admin_Student.jsx'
+import Admin_Teacher from './screens/Admin/Admin_Teacher.jsx'
 import NotFoundPage from './screens/NotFoundPage.jsx'
-import Admin_StudRegistration  from './screens/Admin_StudRegistration.jsx'
+import Admin_StudRegistration  from './screens/Admin/Admin_StudRegistration.jsx'
 import AuthorizedRoute from './components/AuthorizedRoute.jsx'
-import Admin_TeachRegister from './screens/Admin_TeachRegister.jsx'
+import Admin_TeachRegister from './screens/Admin/Admin_TeachRegister.jsx'
+import Admin_Class from './screens/Admin/Admin_Class.jsx'
+import AddClass from './screens/Admin/classRelated/AddClass.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -48,6 +49,8 @@ const router = createBrowserRouter(
             <Route path='/student' element={<Admin_Student /> } /> 
             <Route path='/teachRegister' element={< Admin_TeachRegister/>}/>     
             <Route path='/teacher' element={<Admin_Teacher/>}/>
+            <Route path='/class' element={<Admin_Class/>}/>
+            <Route path='/addClass' element={<AddClass/>}/>
             <Route path='/Profile' element={<ProfileScreen />} />
       </Route>
 

@@ -126,6 +126,63 @@ const teachRegister = asyncHandler(async (req, res) => {
         throw new Error("Invalid user data")
     }
 })
-    
+//disable student
+//route PUT  put/api/admin/disableStudent/:id
+const disableStudent=asyncHandler(async(req,res)=>{
+    try {
+        const {id}=req.params
+        const student =await Student.findById({_id:id})
+        console.log("student",student)
+        if(student)
+        {
+        student.isBlocked=true;
+        await student.save();
+        try {
+            await axios.put('http://localhost:8001/auth/isBlocking', {
+             isBlocked:true,
+             email:student.email
+            });
+        } catch (error) {
+            console.error('Error sending user information to another service:', error.message);
+            // Handle error as needed
+        }
+        res.status(200).json({message:"Success"})
+        }
+        else
+        {
+            res.status(404).json({message:"Student not found"})
+        }
+    } catch (error) {
+        console.log("Error",error)
+    }
 
-export {getStudents,studRegister,getTeachers,teachRegister}
+})
+//enableStudent
+//enable student
+//route PUT  put/api/admin/enableStudent/:id
+const enableStudent=asyncHandler(async(req,res)=>{
+    const {id}=req.params
+    const student =await Student.findById({_id:id})
+    console.log("student",student)
+    if(student)
+    {
+    student.isBlocked=false;
+    await student.save();
+    try {
+        await axios.put('http://localhost:8001/auth/isnonBlocking', {
+         isBlocked:false,
+         email:student.email
+        });
+    } catch (error) {
+        console.error('Error sending user information to another service:', error.message);
+        // Handle error as needed
+    }
+    res.status(200).json({message:"Success"})
+    }
+    else{
+        res.status(404).json({message:"Student not found"})
+    }
+    })
+
+
+export {getStudents,studRegister,getTeachers,teachRegister,disableStudent,enableStudent}

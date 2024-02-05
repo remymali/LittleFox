@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form, Button, Row, Col } from 'react-bootstrap';
-import FormContainer from '../components/formContainer.jsx';
+import FormContainer from '../../components/formContainer.jsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLoginMutation } from '../slices/authApiSlice.js';
-import { setCredentials } from '../slices/authSlice.js';
-import Loader from '../components/Loader.jsx'
+import { useLoginMutation } from '../../slices/authApiSlice.js';
+import { setCredentials } from '../../slices/authSlice.js';
+import Loader from '../../components/Loader.jsx'
 import { toast } from 'react-toastify';
 
 const AdminLogin = () => {

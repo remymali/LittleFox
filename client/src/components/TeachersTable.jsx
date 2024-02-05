@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
 import { useGetTeachersQuery, useDeleteTeacherMutation, useEditTeacherMutation } from '../slices/adminApiSlice.js';
-import './TeachersTable.css';
+import './Table.css';
 import { useSelector } from 'react-redux';
 
 const TeachersTable = () => {

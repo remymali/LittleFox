@@ -8,8 +8,14 @@ import { useLogoutMutation } from '../slices/authApiSlice';
 import { logout } from '../slices/authSlice';
 import Logo from './Logo';
 
-const UserHeader = ({ userInfo, logoutHandler }) => (
+const StudentHeader = ({ userInfo, logoutHandler }) => (
   <>
+     <LinkContainer to='/studAttendance'>
+        <Nav.Link><FaSignInAlt />Attendance</Nav.Link>
+      </LinkContainer>
+    <LinkContainer to='/studMark'>
+          <Nav.Link><FaSignInAlt /> Marks</Nav.Link>
+    </LinkContainer>
     <NavDropdown title={userInfo.name} id='username'>
       <LinkContainer to='/profile'>
         <NavDropdown.Item>Profile</NavDropdown.Item>
@@ -24,6 +30,12 @@ const AdminHeader = ({ userInfo, logoutHandler }) => (
   <LinkContainer to='/admin-dashboard'>
         <Nav.Link><FaSignInAlt />Admin Dashboard</Nav.Link>
       </LinkContainer>
+  <LinkContainer to='/class'>
+        <Nav.Link><FaSignInAlt /> Class</Nav.Link>
+  </LinkContainer>
+  <LinkContainer to='/subject'>
+        <Nav.Link><FaSignInAlt /> Subject</Nav.Link>
+  </LinkContainer>
   <LinkContainer to='/student'>
         <Nav.Link><FaSignInAlt /> Student</Nav.Link>
   </LinkContainer>
@@ -85,7 +97,7 @@ const Header = () => {
               {userInfo ? (
                 <>
                   {userInfo.role === 'student' && (
-                    <UserHeader userInfo={userInfo} logoutHandler={logoutHandler} />
+                    <StudentHeader userInfo={userInfo} logoutHandler={logoutHandler} />
                   )}
                   {userInfo.role === 'admin' && (
                     <AdminHeader userInfo={userInfo} logoutHandler={logoutHandler} />

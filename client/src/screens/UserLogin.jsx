@@ -36,8 +36,13 @@ const UserLogin = () => {
         console.log('OTP sent successfully');
         navigate('/OtpVerification', { state: { email } });
       }
+      
     } catch (error) {
       console.error('Login error:', error);
+      if (error.status === 401 && error.data.message === "User is blocked") {
+        console.log("User is blocked");
+        toast.error("User is blocked");
+      }
     }
   };
   return (

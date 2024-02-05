@@ -1,5 +1,5 @@
 import React from 'react'
-import UsersTable from '../components/UserTable.jsx'
+import UsersTable from '../../components/UserTable.jsx'
 import { Button,Container,Row,Col } from 'react-bootstrap'
 import {useNavigate} from 'react-router-dom'
 const Admin_Student = () => {

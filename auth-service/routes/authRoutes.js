@@ -3,13 +3,14 @@ const router=express.Router()
 import { authUser,registerUser,
     logoutUser,
     getUserProfile,
-    updateUserProfile,verifyOTP } from '../controller/authController.js';
+    updateUserProfile,verifyOTP ,disableUser} from '../controller/authController.js';
 import {protect} from '../middleware/authMiddleware.js'
 
 router.post('/login',authUser)
 router.post('/verifyOTP',verifyOTP)
 router.post('/register',registerUser)      
 router.post('/logout',logoutUser)
+router.put('/isBlocking',disableUser)
 // router.get('/profile',protect,getUserProfile)
 // router.post('/editProfile',protect,updateUserProfile)
 router

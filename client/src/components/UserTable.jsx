@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
-import { useGetUsersQuery, useDeleteUserMutation, useEditUserMutation } from '../slices/adminApiSlice.js';
+import { useGetUsersQuery, useDisableUserMutation,useEnableUserMutation, useEditUserMutation } from '../slices/adminApiSlice.js';
 import './UsersTable.css';
 import { useSelector } from 'react-redux';
 
@@ -14,14 +14,43 @@ const UserTable = () => {
 
   const [editedUserId, setEditedUserId] = useState(null);
   const [editedUserData, setEditedUserData] = useState({});
-  const [deleteUser, { isLoading: isDeleting }] = useDeleteUserMutation();
-  const [editUser, { isLoading: isEditing }] = useEditUserMutation();
+  const [disableUser, { isLoading: isBlocking }] = useDisableUserMutation();
+  const [enableUser, { isLoading: isNonBlocking }] = useEnableUserMutation();
+  const [disableStatusChanged, setDisableStatusChanged] = useState(false);
+  const [enableStatusChanged, setEnableStatusChanged] = useState(false);
 
-  const handleDeleteUser = (userId) => {
-    if (window.confirm('Are you sure you want to delete this user?')) {
-      deleteUser(userId).unwrap();
+  
+  useEffect(()=>{
+
+    refetch()
+  },[disableStatusChanged])
+
+  useEffect(()=>{
+    refetch()
+  },[enableStatusChanged])
+
+  const handleDisableUser = (userId) => {
+    if (window.confirm('Are you sure you want to disable this user?')) {
+      disableUser(userId).unwrap().
+      then(()=>{
+        setDisableStatusChanged(prevState => !prevState)
+      })
+      .catch((error)=>{
+        console.log("Error disabling user:", error);
+      })
     }
   };
+
+ const handleEnableUser=(userId)=>{
+  if (window.confirm('Are you sure you want to enable this user?')) {
+    enableUser(userId).unwrap().then(()=>{
+      setEnableStatusChanged(prevState => !prevState)
+    })
+    .catch((error)=>{
+      console.log("Error enabling user:", error);
+    })
+  }
+ }
 
   const handleEditUser = async (userId, updatedUserData) => {
     const data = await editUser({ id: userId, data: updatedUserData }).unwrap();
@@ -78,8 +107,7 @@ const UserTable = () => {
                   {editedUserId === user._id ? (
                     <input
                       type="text"
-                      value={editedUserData.name || user.name}
-                      onChange={(e) => setEditedUserData({ ...editedUserData, name: e.target.value })}
+                      value={editedUserData.name || user.name}                      
                     />
                   ) : (
                     user.name
@@ -118,9 +146,14 @@ const UserTable = () => {
                   ) : (
                     <>
                       <button onClick={() => setEditedUserId(user._id)} disabled={userInfo._id === user._id}>Edit</button>
-                      <button onClick={() => handleDeleteUser(user._id)} disabled={isDeleting || userInfo._id === user._id}>
-                        Delete
-                      </button>
+                      {!user.isBlocked?(
+                      <button onClick={() => handleDisableUser(user._id)} disabled={isBlocking || userInfo._id === user._id}>
+                      Disable
+                      </button>):(
+                      <button onClick={() => handleEnableUser(user._id)} disabled={isNonBlocking || userInfo._id === user._id}>
+                      Enable
+                      </button>)
+                      }
                     </>
                   )}
                 </td>

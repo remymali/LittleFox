@@ -1,6 +1,9 @@
 import { Container, Card, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import { useSelector, useDispatch } from 'react-redux';
 const Hero = () => {
+  const userInfo=useSelector((state)=>state.auth)
+  console.log("userInfo",userInfo.name)
   return (
     <div className=' py-5'>
       <Container className='d-flex justify-content-center'>
