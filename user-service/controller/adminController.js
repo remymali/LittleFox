@@ -8,6 +8,7 @@ import axios from 'axios'
 //get student details
 const getStudents=asyncHandler(async(req,res)=>{
 try {
+    console.log("fdfkdsf")
     const users= await Student.find({role:"student"});
 
     res.status(200).json(users)
@@ -22,9 +23,9 @@ try {
 const studRegister = asyncHandler(async (req, res) => {
     console.log("req.body>>",req.body)
     console.log("req.file>>",req.file) 
-    const { name, email, password,file} = req.body
+    const { name, email, password,file,sclass} = req.body
     const userExist = await Student.findOne({ email })
-
+    console.log("userExist",userExist)
     if (userExist) {
         console.log('userexist')
         res.status(400)
@@ -36,7 +37,8 @@ const studRegister = asyncHandler(async (req, res) => {
         email,
         password,
         role:'student',
-        profileImg:  req.file.filename
+        profileImg:  req.file.filename,
+        class:sclass
     })
 
     try {

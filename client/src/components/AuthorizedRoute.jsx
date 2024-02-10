@@ -1,9 +1,11 @@
 import {Navigate,Outlet} from 'react-router-dom'
-import {useSelector} from 'react-redux'
+import { useSelector } from 'react-redux';
 
-const AuthorizedRoute = () => {
-    const {userInfo}= useSelector((state)=>state.auth);
-  return userInfo.role === 'admin'?(<Outlet/>):(<Navigate to='/'  replace/>);
-}
+const AuthorizedRoute = ({ allowedRoles }) => {
+    const { userInfo } = useSelector((state) => state.auth);
+    const isAuthorized = allowedRoles.includes(userInfo.role);
 
-export default AuthorizedRoute
+    return isAuthorized ? <Outlet /> : <Navigate to="/" replace />;
+};
+
+export default AuthorizedRoute;

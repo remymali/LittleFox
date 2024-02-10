@@ -8,9 +8,9 @@ import {notFound,errorHandler} from './middleware/errorMiddleware.js'
 import connectDB from "./config/db.js";
 connectDB();
 const port=process.env.PORT||5000;
-//import studentRoutes from './routes/studentRoutes.js'
+import studentRoutes from './routes/studentRoutes.js'
 import adminRoutes from './routes/adminRoutes.js'
-//import teacherRoutes from './routes/teacherRoutes.js'
+import teacherRoutes from './routes/teacherRoutes.js'
 
 const app=express();
 app.use(cors())
@@ -26,9 +26,9 @@ app.use((req, res, next) => {
     console.log(`inside userservice${req.method} ${req.url}`);
     next();
 });
-//app.use('/student',studentRoutes)
+app.use('/student',studentRoutes)
 app.use('/admin',adminRoutes)
-//app,use('/teacher',teacherRoutes)
+app.use('/teacher',teacherRoutes)
 
 app.use(notFound);   
 app.use(errorHandler);

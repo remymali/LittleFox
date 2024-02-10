@@ -15,11 +15,8 @@ const studentSchema = new mongoose.Schema({
   role: { type: String },
   isBlocked:{type:Boolean,default:false},
   class: {
-    className: { type: String },
-    teacher: {
-      teacherName: { type: String },
-      teacherEmail: { type: String },
-    },
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'sClass'
   },
   dateOfJoin: { type: Date },
   exams: [
@@ -28,6 +25,7 @@ const studentSchema = new mongoose.Schema({
       examDate: { type: Date },
       subjects: [
         {
+          subjectId: { type: String },
           subjectName: { type: String },
           marks: { type: Number },
         },

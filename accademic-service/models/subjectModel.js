@@ -1,17 +1,12 @@
 import mongoose from "mongoose";
 
-const studentSchema= new mongoose.Schema({
+const subjectSchema= new mongoose.Schema({
     subName: {
         type: String,
         required: true,
     },
-    sessions: {
+    subCode: {
         type: String,
-        required: true,
-    },
-    sclassName: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'sclass',
         required: true,
     },
     teacher: {
@@ -20,4 +15,8 @@ const studentSchema= new mongoose.Schema({
     }
 }, { timestamps: true });
 
-module.exports = mongoose.model("subject", subjectSchema);
+const subject = mongoose.model('subject', subjectSchema);   
+
+export default  subject
+
+

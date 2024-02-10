@@ -1,56 +1,55 @@
 import asyncHandler from 'express-async-handler'
-import sClass from  '../models/sclassModel.js'
+import sClass from '../models/sclassModel.js'
 import axios from 'axios'
 
 
 
 //get class details
-const getClass=asyncHandler(async(req,res)=>{
-try {
+const getClass = asyncHandler(async (req, res) => {
+    try {
 
-    const sclass= await sClass.find();
-    res.status(200).json(sclass)
+        const sclass = await sClass.find();
+        res.status(200).json(sclass)
 
-} catch (error) {
-    res.status(400).json({message:error.message})
-}
-})   
+    } catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+})
 //add class
 //route post post/api/class/addclass
-const addClass= asyncHandler(async(req,res)=>{
+const addClass = asyncHandler(async (req, res) => {
     try {
-        console.log("req.body",req.body.name)
-        const {name,division,teacher}=req.body
-    const classExist= await sClass.findOne({name})
-    if (classExist) {
-        console.log('classExist')
-        res.status(400)
-        throw new Error("Class already exists")
-    }
-    console.log("req.body",req.body)
-    const newclass=await sClass.create({
-        name,
-        division,
-        teacher
-    })
-    await newclass.save();
-    if (newclass)   
-             {
-                res.status(201).json({
-                    _id: newclass._id,
-                    name: newclass.name,
-                    division: newclass.division,
-                    teacher: newclass.teacher
-                })
-            }
-            else {
-                res.status(400)
-                throw new Error("Invalid user data")
-            }
+
+        const { name, division, teacher } = req.body
+        const classExist = await sClass.findOne({ name })
+        if (classExist) {
+            console.log('classExist')
+            res.status(400)
+            throw new Error("Class already exists")
+        }
+        console.log("req.body", req.body)
+        const newclass = await sClass.create({
+            name,
+            division,
+            teacher
+        })
+        await newclass.save();
+        if (newclass) {
+            res.status(201).json({
+                _id: newclass._id,
+                name: newclass.name,
+                division: newclass.division,
+                teacher: newclass.teacher
+            })
+        }
+        else {
+            res.status(400)
+            throw new Error("Invalid user data")
+        }
     } catch (err) {
         res.status(500).json(err);
     }
-    
+
 })
 
 const editClass = asyncHandler(async (req, res) => {
@@ -61,7 +60,7 @@ const editClass = asyncHandler(async (req, res) => {
             res.status(404);
             throw new Error('Class not found');
         }
-        console.log("sclass",sclass)
+        console.log("sclass", sclass)
         // Update class properties with the provided data
         sclass.name = req.body.data.name || sclass.name;
         sclass.division = req.body.data.division || sclass.division;
@@ -77,4 +76,4 @@ const editClass = asyncHandler(async (req, res) => {
 });
 
 
-export  {getClass,addClass,editClass}
+export { getClass, addClass, editClass }

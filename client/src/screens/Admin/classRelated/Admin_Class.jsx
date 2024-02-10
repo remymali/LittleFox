@@ -1,5 +1,5 @@
 import React from 'react'
-import ClassTable from '../../components/ClassTable.jsx'
+import ClassTable from '../../../components/ClassTable.jsx'
 import { Button,Container,Row,Col } from 'react-bootstrap'
 import {useNavigate} from 'react-router-dom'
 const Admin_Class = () => {

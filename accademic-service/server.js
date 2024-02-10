@@ -9,6 +9,7 @@ import connectDB from "./config/db.js";
 connectDB();
 const port=process.env.PORT||5000;
 import classRoutes from './routes/classRoutes.js'
+import subjectRoutes from './routes/subjectRoutes.js'
 
 const app=express();
 app.use(cors())
@@ -25,12 +26,12 @@ app.use((req, res, next) => {
     next();
 });
 app.use('/class',classRoutes)
-
+app.use('/subject',subjectRoutes)
 app.use(notFound);   
 app.use(errorHandler);
 app.get('/',(req,res)=>
-    res.send('AuthServer is ready')
+    res.send('AuthServer is ready')    
 )
 app.listen(port,()=>{
-    console.log(`Server logged in port ${port}`)
-})   
+    console.log(`Server logged in port ${port}`)   
+})      

@@ -1,24 +1,23 @@
 import React from 'react'
-import TeachersTable from '../../components/TeachersTable.jsx'
+import CommonTable from '../../../components/commonTable.jsx'
 import { Button,Container,Row,Col } from 'react-bootstrap'
 import {useNavigate} from 'react-router-dom'
-
-const Admin_Teacher = () => {
+const Admin_Subject = () => {
   const navigate=useNavigate();
-  const handleTeacherAdding=()=>{
-    navigate('/teachRegister')
+  const handleClassAdding=()=>{
+    navigate('/addSubject')
   }
   return (
 
     <Container>
       <Row>
       < div className="d-flex justify-content-end p-2">
-          <Button variant="primary" size="lg" className="ml-auto" onClick={handleTeacherAdding}>
+          <Button variant="primary" size="lg" className="ml-auto" onClick={handleClassAdding}>
             Add
           </Button>
         </div>
         <Col>
-          <TeachersTable />
+          <CommonTable />
         </Col>
         
       </Row>
@@ -26,4 +25,4 @@ const Admin_Teacher = () => {
   )
 }
 
-export default Admin_Teacher
+export default Admin_Subject

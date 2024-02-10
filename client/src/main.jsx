@@ -19,14 +19,22 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css'
 import About from './screens/About.jsx'
 import UserLogin from './screens/UserLogin.jsx'
-import Admin_Student from './screens/Admin/Admin_Student.jsx'
-import Admin_Teacher from './screens/Admin/Admin_Teacher.jsx'
+import Admin_Student from './screens/Admin/studentRelated/Admin_Student.jsx'
+import Admin_Teacher from './screens/Admin/teacherRelated/Admin_Teacher.jsx'
 import NotFoundPage from './screens/NotFoundPage.jsx'
-import Admin_StudRegistration  from './screens/Admin/Admin_StudRegistration.jsx'
+import Admin_StudRegistration  from './screens/Admin/studentRelated/Admin_StudRegistration.jsx'
 import AuthorizedRoute from './components/AuthorizedRoute.jsx'
-import Admin_TeachRegister from './screens/Admin/Admin_TeachRegister.jsx'
-import Admin_Class from './screens/Admin/Admin_Class.jsx'
+import Admin_TeachRegister from './screens/Admin/teacherRelated/Admin_TeachRegister.jsx'
+import Admin_Class from './screens/Admin/classRelated/Admin_Class.jsx'
 import AddClass from './screens/Admin/classRelated/AddClass.jsx'
+import Admin_Subject  from './screens/Admin/subjectRelated/Admin_Subject.jsx'
+import AddSubject from './screens/Admin/subjectRelated/AddSubject.jsx'
+import StudentList from './screens/Teacher/studentList.jsx'
+import AddAttendance from './screens/Teacher/AddAttendance.jsx'
+import AddMarks from './screens/Teacher/AddMarks.jsx'
+import Marks_StudentList from './screens/Teacher/Marks_StudentList.jsx'
+import Attendance from './screens/Student/Attendance.jsx'
+import ExamScore from './screens/Student/ExamScore.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -43,19 +51,34 @@ const router = createBrowserRouter(
         <Route path='/editProfile' element={<ProfileScreen />} />
       </Route>
       {/* Admin details */}
-      <Route path=''  element={<AuthorizedRoute/>}>
+      <Route path=''  element={<AuthorizedRoute allowedRoles={['admin']} />}>
             <Route path='/register' element={<RegisterScreen/>} />
             <Route path='/studRegister' element={<Admin_StudRegistration/>}/>
             <Route path='/student' element={<Admin_Student /> } /> 
             <Route path='/teachRegister' element={< Admin_TeachRegister/>}/>     
             <Route path='/teacher' element={<Admin_Teacher/>}/>
             <Route path='/class' element={<Admin_Class/>}/>
+            <Route path='/subject' element={<Admin_Subject/>}/>
+            <Route path='/addSubject' element={<AddSubject/>}/>
             <Route path='/addClass' element={<AddClass/>}/>
             <Route path='/Profile' element={<ProfileScreen />} />
       </Route>
 
-      <Route path='*' element={<NotFoundPage/>}/>
+      {/* Teacher details */}
+      <Route path='' element={<AuthorizedRoute allowedRoles={['teacher']} />}>
+          <Route path='/studentlist' element={<StudentList/>}/>
+          <Route path='/attendance' element={<AddAttendance/>}/>
+          <Route path='/exam/:userId'  element={<AddMarks/>}/>
+          <Route path='/MarkStudentList' element={<Marks_StudentList/>}/>
+      </Route>
 
+       {/* Student details */}
+       <Route path='' element={<AuthorizedRoute allowedRoles={['student']} />}>
+          <Route path='/studAttendance' element={<Attendance/>}/>
+          <Route path='/studMarks' element={<ExamScore/>}/>
+      </Route>
+      <Route path='*' element={<NotFoundPage/>}/>
+     
      
       
     </Route>

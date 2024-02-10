@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useAddClassMutation} from '../../../slices/classApiSlice.js';
+import { useAddSubjectMutation} from '../../../slices/subjectApiSlice.js';
 import { useGetTeachersQuery } from '../../../slices/adminApiSlice.js';
 import { setCredentials } from '../../../slices/authSlice.js';
 import Loader from '../../../components/Loader.jsx';
@@ -10,9 +10,9 @@ import { toast } from 'react-toastify';
 import FormContainer from '../../../components/formContainer.jsx';
 import '../studentRelated/Admin_Student.jsx'
 
-const AddClass = () => {
+const AddSubject = () => {
   const [name, setName] = useState('');
-  const [division, setDivision] = useState('');
+  const [subCode, setSubCode] = useState('');
   const [teacher, setTeacher] = useState('');
 
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const AddClass = () => {
 
   const { userInfo } = useSelector((state) => state.auth);
   const {data:teachers,isLoading:teachersLoading} =useGetTeachersQuery();
-  const [addClass, { isLoading }] = useAddClassMutation();
+  const [addSubject, { isLoading }] = useAddSubjectMutation();
   useEffect(()=>{
     const fetchTeachers=(()=>{
 
@@ -29,7 +29,7 @@ const AddClass = () => {
   useEffect(() => {
     if (userInfo) {
       // Redirect to a different route or handle authentication differently
-      navigate('/addClass');
+      navigate('/addSubject');
     }
   }, [navigate, userInfo]);
 
@@ -38,16 +38,16 @@ const AddClass = () => {
     e.preventDefault();
     
     // Client-side form validation
-    if (!name || !division || !teacher) {
+    if (!name || !subCode || !teacher) {
       toast.error('All fields are required.');
       return;
     }
 
     try {
         console.log("teacher",teacher)
-        const classdtl={name:name,division:division,teacher:teacher}
-      const res = await addClass(classdtl).unwrap();
-      navigate('/class');
+        const classdtl={name:name,subCode:subCode,teacher:teacher}
+      const res = await addSubject(classdtl).unwrap();
+      navigate('/subject');
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
@@ -55,7 +55,7 @@ const AddClass = () => {
 
   return (
     <FormContainer>
-      <h1>Add Class</h1>
+      <h1>Add Subject</h1>
       <Form onSubmit={submitHandler}>
         <Form.Group controlId='name'>
           <Form.Label>Name</Form.Label>
@@ -67,19 +67,19 @@ const AddClass = () => {
           />
         </Form.Group>
 
-        <Form.Group controlId='division'>
-          <Form.Label>Division</Form.Label>
+        <Form.Group controlId='subCode'>
+          <Form.Label>SubCode</Form.Label>
           <Form.Control
-            type='division'
-            placeholder='Enter division'
-            value={division}
-            onChange={(e) => setDivision(e.target.value)}
+            type='subCode'
+            placeholder='Enter subCode'
+            value={subCode}
+            onChange={(e) => setSubCode(e.target.value)}
           />
         </Form.Group>
 
         
         <Form.Group className="mb-3">
-        <Form.Label>Class Teacher</Form.Label>
+        <Form.Label>Teacher</Form.Label>
         <Form.Select  value={teacher}  onChange={(e)=>setTeacher(e.target.value)}>
           <option value=" ">Select a teacher</option>
           {
@@ -100,4 +100,4 @@ const AddClass = () => {
   );
 };
 
-export default AddClass;
+export default AddSubject;

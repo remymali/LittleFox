@@ -7,13 +7,31 @@ import { useNavigate } from 'react-router-dom';
 import { useLogoutMutation } from '../slices/authApiSlice';
 import { logout } from '../slices/authSlice';
 import Logo from './Logo';
-
+const TeacherHeader=({userInfo,logoutHandler})=>(
+  <>
+     <LinkContainer to='/studentlist'>
+        <Nav.Link><FaSignInAlt />Student</Nav.Link>
+      </LinkContainer>
+     <LinkContainer to='/attendance'>
+        <Nav.Link><FaSignInAlt />Attendance</Nav.Link>
+      </LinkContainer>
+    <LinkContainer to='/MarkStudentList'>
+          <Nav.Link><FaSignInAlt /> Marks</Nav.Link>
+    </LinkContainer>
+    <NavDropdown title={userInfo.name} id='username'>
+      <LinkContainer to='/profile'>
+        <NavDropdown.Item>Profile</NavDropdown.Item>
+      </LinkContainer>
+      <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
+    </NavDropdown>
+  </>
+)
 const StudentHeader = ({ userInfo, logoutHandler }) => (
   <>
      <LinkContainer to='/studAttendance'>
         <Nav.Link><FaSignInAlt />Attendance</Nav.Link>
       </LinkContainer>
-    <LinkContainer to='/studMark'>
+    <LinkContainer to='/studMarks'>
           <Nav.Link><FaSignInAlt /> Marks</Nav.Link>
     </LinkContainer>
     <NavDropdown title={userInfo.name} id='username'>
@@ -101,6 +119,9 @@ const Header = () => {
                   )}
                   {userInfo.role === 'admin' && (
                     <AdminHeader userInfo={userInfo} logoutHandler={logoutHandler} />
+                  )}
+                   {userInfo.role === 'teacher' && (
+                    <TeacherHeader userInfo={userInfo} logoutHandler={logoutHandler} />
                   )}
                 </>
               ) : (
