@@ -21,7 +21,7 @@ const addClass = asyncHandler(async (req, res) => {
     try {
 
         const { name, division, teacher } = req.body
-        const classExist = await sClass.findOne({ name })
+        const classExist = await sClass.findOne({ name ,division})
         if (classExist) {
             console.log('classExist')
             res.status(400)

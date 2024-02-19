@@ -1,5 +1,6 @@
 import React from 'react'
 import ClassTable from '../../../components/ClassTable.jsx'
+import PaginationTest from '../../../components/PaginationTest.jsx'
 import { Button,Container,Row,Col } from 'react-bootstrap'
 import {useNavigate} from 'react-router-dom'
 const Admin_Class = () => {
@@ -19,7 +20,12 @@ const Admin_Class = () => {
         <Col>
           <ClassTable />
         </Col>
-        
+       
+          
+       
+      </Row>
+      <Row>
+      <PaginationTest />
       </Row>
     </Container>
   )

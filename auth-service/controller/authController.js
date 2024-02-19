@@ -4,6 +4,7 @@ import generateToken from '../utils/generateToken.js'
 import otpGenerator from 'otp-generator'
 import generateOTP from '../utils/generateOTP.js'
 import sendOtpEmail from '../utils/sendOtpEmail.js'
+//google login
 
 //verifyOTP
 const verifyOTP = asyncHandler(async (req, res) => {
@@ -19,6 +20,11 @@ const verifyOTP = asyncHandler(async (req, res) => {
         return; // Add a return statement to stop execution
     }
     console.log(user)
+    if(otp!=user.otp)
+    {
+        res.status(400).json({ message: "OTP verification failed:" })
+        return;
+    }
     if (otp === user.otp) {
         res.status(201).json({
             _id: user._id,

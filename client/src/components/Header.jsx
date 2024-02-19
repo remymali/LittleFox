@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useLogoutMutation } from '../slices/authApiSlice';
 import { logout } from '../slices/authSlice';
+import { googleLogout } from '@react-oauth/google';
 import Logo from './Logo';
 const TeacherHeader=({userInfo,logoutHandler})=>(
   <>
@@ -57,6 +58,9 @@ const AdminHeader = ({ userInfo, logoutHandler }) => (
   <LinkContainer to='/student'>
         <Nav.Link><FaSignInAlt /> Student</Nav.Link>
   </LinkContainer>
+  <LinkContainer to='/table'>
+        <Nav.Link><FaSignInAlt /> Notice</Nav.Link>
+  </LinkContainer>
   <LinkContainer to='/teacher'>
         <Nav.Link><FaSignInAlt /> Teacher</Nav.Link>
   </LinkContainer>
@@ -94,7 +98,9 @@ const Header = () => {
     try {
       await logoutApiCall().unwrap();
       dispatch(logout());
+      googleLogout();
       navigate('/login');
+
     } catch (err) {
       console.error(err);
     }

@@ -9,6 +9,7 @@ import {
   Route,
   RouterProvider,
 } from 'react-router-dom';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import HomeScreen from './screens/HomeScreen.jsx';
 import RegisterScreen from './screens/RegisterScreen.jsx';
 import ProfileScreen from './screens/ProfileScreen.jsx'; 
@@ -35,6 +36,8 @@ import AddMarks from './screens/Teacher/AddMarks.jsx'
 import Marks_StudentList from './screens/Teacher/Marks_StudentList.jsx'
 import Attendance from './screens/Student/Attendance.jsx'
 import ExamScore from './screens/Student/ExamScore.jsx'
+//import Notice from './screens/Admin/Notice/showNotice.jsx'
+import BasicTable from './components/BasicTable.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -62,6 +65,8 @@ const router = createBrowserRouter(
             <Route path='/addSubject' element={<AddSubject/>}/>
             <Route path='/addClass' element={<AddClass/>}/>
             <Route path='/Profile' element={<ProfileScreen />} />
+            {/* <Route path='/notice' element={<Notice />} /> */}
+            <Route path='/table' element={<BasicTable />} />
       </Route>
 
       {/* Teacher details */}
@@ -88,7 +93,9 @@ const router = createBrowserRouter(
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <React.StrictMode>
+    <GoogleOAuthProvider clientId="82950343806-08m4k8jvbs0a55rf2d291p2id2j5723r.apps.googleusercontent.com">
       <RouterProvider router={router} />
+      </GoogleOAuthProvider>
     </React.StrictMode>
   </Provider>
 );

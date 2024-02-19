@@ -4,9 +4,10 @@ import { useGetUsersQuery, useDisableUserMutation,useEnableUserMutation, useEdit
 import './UsersTable.css';
 import { useSelector } from 'react-redux';
 
-const UserTable = () => {
+const UserTable = ({selectedClass,page,limit}) => {
+  console.log("selectedClass",selectedClass)
   const { userInfo } = useSelector((state) => state.auth);
-  const { data: users, isLoading, error, refetch } = useGetUsersQuery();
+  const { data: users, isLoading, error, refetch } = useGetUsersQuery({selectedClass,page,limit});
   console.log(users)
   useEffect(() => {
     refetch();
@@ -100,7 +101,7 @@ const UserTable = () => {
           </tbody>
         ) : (
           <tbody>
-            {users.map((user) => (
+           {Array.isArray(users) && users.map((user) => (
               <tr key={user._id}>
                 <td><pre>{user._id}</pre></td>
                 <td>
@@ -145,12 +146,12 @@ const UserTable = () => {
                     </button>
                   ) : (
                     <>
-                      <button onClick={() => setEditedUserId(user._id)} disabled={userInfo._id === user._id}>Edit</button>
+                      <button className="edit" onClick={() => setEditedUserId(user._id)} disabled={userInfo._id === user._id}>Edit</button>
                       {!user.isBlocked?(
-                      <button onClick={() => handleDisableUser(user._id)} disabled={isBlocking || userInfo._id === user._id}>
+                      <button className="disabled" onClick={() => handleDisableUser(user._id)} disabled={isBlocking || userInfo._id === user._id}>
                       Disable
                       </button>):(
-                      <button onClick={() => handleEnableUser(user._id)} disabled={isNonBlocking || userInfo._id === user._id}>
+                      <button className="enabled" onClick={() => handleEnableUser(user._id)} disabled={isNonBlocking || userInfo._id === user._id}>
                       Enable
                       </button>)
                       }
@@ -163,7 +164,10 @@ const UserTable = () => {
         )
       }
     </table>
+   
   );
+ 
+  
 };
 
 export default UserTable;

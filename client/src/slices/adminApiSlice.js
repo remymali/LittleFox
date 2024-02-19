@@ -5,9 +5,14 @@ const ADMIN_USERS_URL = '/api/user-service/admin';
 export const adminApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getUsers: builder.query({
-      query: () => ({
+      query: ({ selectedClass, page, limit }) => ({
         url: `${ADMIN_USERS_URL}/student`,
         method: 'GET',
+        params: {
+          selectedClass,
+          page,
+          limit,
+        },
       }),
     }),
     studRegister: builder.mutation({
