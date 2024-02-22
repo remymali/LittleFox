@@ -1,0 +1,55 @@
+.users-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    width: min(90%, 70.5rem);
+    margin-inline: auto;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+.users-table thead tr {
+    user-select: none;
+    color: #ffffff;
+    background-color: rgba(14, 14, 14, 0.25);
+}
+
+.users-table th,
+.users-table td {
+    padding: 12px 15px;
+}
+
+.users-table tbody tr {
+    border-bottom: 1px solid rgba(14, 14, 14, 0.5);
+}
+
+
+
+.users-table tbody tr:last-of-type {
+    background-color: rgba(14, 14, 14, 0.25);
+}
+
+.users-table tbody tr:hover {
+    background-color: rgba(14, 14, 14, 0.75);
+    transition: background-color .2s ease-in-out;
+}
+
+.users-table button {
+    margin-inline: .25rem;
+    padding: 8px 16px;
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.users-table button:hover {
+    background-color: #45a049; /* Darker Green */
+}

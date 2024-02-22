@@ -36,8 +36,8 @@ import AddMarks from './screens/Teacher/AddMarks.jsx'
 import Marks_StudentList from './screens/Teacher/Marks_StudentList.jsx'
 import Attendance from './screens/Student/Attendance.jsx'
 import ExamScore from './screens/Student/ExamScore.jsx'
-//import Notice from './screens/Admin/Notice/showNotice.jsx'
-import BasicTable from './components/BasicTable.jsx'
+import Notice from './screens/Admin/Notice/addNotice.jsx'
+import ShowNotice from './screens/Admin/Notice/showNotice.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -65,8 +65,9 @@ const router = createBrowserRouter(
             <Route path='/addSubject' element={<AddSubject/>}/>
             <Route path='/addClass' element={<AddClass/>}/>
             <Route path='/Profile' element={<ProfileScreen />} />
-            {/* <Route path='/notice' element={<Notice />} /> */}
-            <Route path='/table' element={<BasicTable />} />
+             <Route path='/notice' element={<Notice />} /> 
+             <Route path='/showNotice' element={<ShowNotice/>}/>
+            
       </Route>
 
       {/* Teacher details */}

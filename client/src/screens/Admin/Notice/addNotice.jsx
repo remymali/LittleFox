@@ -29,7 +29,7 @@ const submitHandler=(async(e)=>{
    
   const res = await addNotice(noticedtl).unwrap();
   console.log("res",res)
-  navigate('/notice');
+  navigate('/showNotice');
 } catch (err) {
   toast.error(err?.data?.message || err.error);
 }

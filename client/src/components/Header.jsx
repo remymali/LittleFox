@@ -58,7 +58,7 @@ const AdminHeader = ({ userInfo, logoutHandler }) => (
   <LinkContainer to='/student'>
         <Nav.Link><FaSignInAlt /> Student</Nav.Link>
   </LinkContainer>
-  <LinkContainer to='/table'>
+  <LinkContainer to='/showNotice'>
         <Nav.Link><FaSignInAlt /> Notice</Nav.Link>
   </LinkContainer>
   <LinkContainer to='/teacher'>

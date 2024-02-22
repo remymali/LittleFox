@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import cors from 'cors';
 import bodyParser from 'body-parser'
 import cookieParser from "cookie-parser";
+import { run } from './Kafka/noticeConsumer.js'
 dotenv.config()
 import {notFound,errorHandler} from './middleware/errorMiddleware.js'
 import connectDB from "./config/db.js";
@@ -15,6 +16,8 @@ import teacherRoutes from './routes/teacherRoutes.js'
 const app=express();
 app.use(cors())
 app.use(express.json())
+//added new 
+app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 app.use(cookieParser());
 

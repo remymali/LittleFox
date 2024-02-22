@@ -45,6 +45,19 @@ const studentSchema = new mongoose.Schema({
       description: { type: String },
     },
   ],
+  schoolMessages: [
+    {
+      sender: {
+        senderId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        email: { type: String },
+        role: { type: String },
+        _id: false // Exclude _id from subdocument
+      },
+      title: { type: String },
+      details: { type: String },
+      date: { type: Date, default: Date.now }
+    }
+  ]
 });
 
 studentSchema.pre('save', async function (next) {

@@ -5,7 +5,6 @@ import Student from '../models/studentModel.js';
 const getAttendanceDtl = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params; // Retrieve the id from req.params
-    console.log("Entered student", id);           
     
     // Find the student by email
     const student = await Student.findOne({ email: id });
@@ -41,4 +40,37 @@ const getMarksDtl=asyncHandler(async (req, res) => {
     }
   });
 
-export { getAttendanceDtl,getMarksDtl };
+  const saveMessage = asyncHandler(async (message) => {
+    try {
+      // Extract data from the message
+      const { sender, title, details, date } = message;
+    
+      // Find all students
+      const students = await Student.find();
+    
+      // Loop through each student and update their schoolMessages array
+      await Promise.all(students.map(async (student) => {
+        student.schoolMessages.push({
+          sender: {
+            senderId: sender.senderId, // Assuming senderId is provided in the message
+            email: sender.email,
+            role: sender.role
+          },
+          title,
+          details,
+          date: new Date(date)
+        });
+    
+        // Save the updated student document
+        await student.save();
+      }));
+    
+      console.log('Message saved to all students:', message);
+    } catch (error) {
+      console.error('Error saving message to all students:', error);
+    }
+  });
+  
+  
+
+export { getAttendanceDtl,getMarksDtl,saveMessage };

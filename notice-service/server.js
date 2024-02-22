@@ -13,6 +13,8 @@ import noticeRoutes from './routes/noticeRoutes.js'
 const app=express();
 app.use(cors())
 app.use(express.json())
+//added new
+app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 app.use(cookieParser());
 

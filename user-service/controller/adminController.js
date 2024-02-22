@@ -20,32 +20,7 @@ const getStudents = asyncHandler(async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 });  
-// const getStudents = asyncHandler(async (req, res) => {
-//     try {
-//       const { selectedClass, page, limit } = req.query; // Access query parameters
-//       console.log("req.query",selectedClass);
-//       const currentPage = parseInt(page) || 1; // Convert to integer, default to page 1 if not provided
-//       const itemsPerPage = parseInt(limit) || 10; // Convert to integer, default to 10 items per page if not provided
-  
-//       // Calculate pagination offsets
-//       const startIndex = (currentPage - 1) * itemsPerPage;
-//       const endIndex = currentPage * itemsPerPage;
-  
-//       // Query database to get total count of students in the selected class
-//       const totalCount = await Student.countDocuments({ class: selectedClass });
-  
-//       // Fetch paginated students data from database
-//       const classes = await Student.find({ class: selectedClass }).skip(startIndex).limit(itemsPerPage);
-//        console.log("students",classes)
-//       // Construct response object with paginated data and metadata
-//       res.status(200).json(classes);
-  
-      
-//     } catch (error) {
-//       res.status(400).json({ message: error.message });
-//     }
-//   });
-  
+
   
    
 //@des  Register student

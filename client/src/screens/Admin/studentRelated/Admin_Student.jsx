@@ -10,30 +10,17 @@ import Stack from '@mui/material/Stack';
 
 const Admin_Student = () => {
   const [selectedClass, setSelectedClass] = useState('');
-  /**pagination start */
-  const [currentPage, setCurrentPage] = useState(0);
-  const [totalPages, setTotalPages] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
-  /**pagination end */
+  
   const navigate=useNavigate();
   const {data:classes,isLoading:sclassLoading} = useGetClassQuery({
-    selectedClass,
-    page: currentPage,
-    limit: itemsPerPage,
+    selectedClass
+    
   });
-  useEffect(() => {
-    if (!sclassLoading && classes) {
-      
-      setTotalPages(Math.ceil(classes.length / itemsPerPage));
-    }
-  }, [sclassLoading, classes, itemsPerPage]);
+  
   const handleStudentAdding=()=>{
     navigate('/studRegister')
   }
 
-  const handleChangePage = (event, newPage) => {
-    setCurrentPage(newPage);
-  };
   return (
 
     <Container>
@@ -59,15 +46,7 @@ const Admin_Student = () => {
         <Col>
           <UsersTable selectedClass={selectedClass} data={classes}/>
         </Col>
-        <Stack spacing={2}>
-        <Pagination
-              color="primary"
-              className='p-5'
-              count={totalPages}
-              page={currentPage}
-              onChange={handleChangePage}
-            />
-        </Stack>
+        
       </Row>
     </Container>
   )
