@@ -35,9 +35,11 @@ import AddAttendance from './screens/Teacher/AddAttendance.jsx'
 import AddMarks from './screens/Teacher/AddMarks.jsx'
 import Marks_StudentList from './screens/Teacher/Marks_StudentList.jsx'
 import Attendance from './screens/Student/Attendance.jsx'
+import StudNotice from './screens/Student/StudNotice.jsx'
 import ExamScore from './screens/Student/ExamScore.jsx'
 import Notice from './screens/Admin/Notice/addNotice.jsx'
 import ShowNotice from './screens/Admin/Notice/showNotice.jsx'
+import PasswordResetPage from './screens/PasswordResetPage.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -47,7 +49,7 @@ const router = createBrowserRouter(
       <Route path='/login' element={<UserLogin/>} />
       <Route path='/OtpVerification' element={<OtpVerification/>} />
       <Route path='/about' element={<About/>} />
-
+      <Route path='/regeneratePassword' element={<PasswordResetPage/>}/>
       <Route path='' element={<PrivateRoute />}>
       <Route path='/userLandingPage' element={<UserLandingPage />} />
         <Route path='/Profile' element={<ProfileScreen />} />
@@ -66,7 +68,7 @@ const router = createBrowserRouter(
             <Route path='/addClass' element={<AddClass/>}/>
             <Route path='/Profile' element={<ProfileScreen />} />
              <Route path='/notice' element={<Notice />} /> 
-             <Route path='/showNotice' element={<ShowNotice/>}/>
+             <Route path='/listNotice' element={<ShowNotice/>}/>
             
       </Route>
 
@@ -82,6 +84,7 @@ const router = createBrowserRouter(
        <Route path='' element={<AuthorizedRoute allowedRoles={['student']} />}>
           <Route path='/studAttendance' element={<Attendance/>}/>
           <Route path='/studMarks' element={<ExamScore/>}/>
+          <Route path='/studNotice' element={<StudNotice/>}/>
       </Route>
       <Route path='*' element={<NotFoundPage/>}/>
      

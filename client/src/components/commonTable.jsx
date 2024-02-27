@@ -12,6 +12,32 @@ const CommonTable = () => {
   useEffect(() => {
     refetch();
   }, [refetch]);
+  // pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(2);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredSubjects, setFilteredSubjects] = useState([]);
+
+  useEffect(() => {
+    if (!isLoading && !error) {
+      const filteredResults = subject.filter((item) =>
+        item.subName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.subCode.toLowerCase().includes(searchQuery.toLowerCase()) 
+      );
+      setFilteredSubjects(filteredResults);
+    }
+  }, [searchQuery, subject, isLoading, error]);
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+    setCurrentPage(1);
+  };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentSubjects = filteredSubjects?.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const [editedClassId, setEditedClassId] = useState(null);
   const [editedClassData, setEditedClassData] = useState({});
@@ -43,6 +69,17 @@ const CommonTable = () => {
   }
 
   return (
+    <div>
+       <div className='Search-Container'>
+    <input
+      type="text"
+      value={searchQuery}
+      onChange={handleSearchChange}
+      placeholder="Search by name or subcode..."
+      className='search-input'
+    />
+    </div>
+    
     <table className="Teachers-table">
       <thead>
         <tr>
@@ -66,7 +103,7 @@ const CommonTable = () => {
           </tbody>
         ) : (
           <tbody>
-            {subject.map((user) => (
+            {currentSubjects && currentSubjects.map((user) => (
               <tr key={user._id}>
                 <td><pre>{user._id}</pre></td>
                 <td>
@@ -135,6 +172,17 @@ const CommonTable = () => {
         )
       }
     </table>
+     {/* Pagination */}
+     <ul className="pagination">
+        {Array.from({ length: Math.ceil(filteredSubjects?.length / itemsPerPage) }, (_, i) => (
+          <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}>
+            <button onClick={() => paginate(i + 1)} className="page-link">
+              {i + 1}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 

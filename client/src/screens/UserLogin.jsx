@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import FormContainer from '../components/formContainer.jsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLoginMutation } from '../slices/authApiSlice.js';
+import { useLoginMutation, useForgetMutation ,useGoogleLoginMutation} from '../slices/authApiSlice.js';
 import { setCredentials } from '../slices/authSlice.js';
 import { GoogleLogin } from '@react-oauth/google';
 import Loader from '../components/Loader.jsx';
@@ -20,6 +20,8 @@ const UserLogin = () => {
   const navigate = useNavigate();
 
   const [login] = useLoginMutation();
+  const [forget] = useForgetMutation();
+  const [googleLogin]=useGoogleLoginMutation();
 
   const { userInfo } = useSelector((state) => state.auth);
 
@@ -43,8 +45,7 @@ const UserLogin = () => {
       errors.password = 'Password is required';
       isValid = false;
     }
-    else if(!isValidPassword(password))
-    {
+    else if (!isValidPassword(password)) {
       errors.password = 'Password is should be 4 digit';
       isValid = false;
     }
@@ -58,11 +59,73 @@ const UserLogin = () => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
   };
-  const isValidPassword =(password)=>{
-   
-    return  (password.length === 4)
+  const isValidPassword = (password) => {
+
+    return (password.length === 5)
   }
 
+  const handleForgotPassword = async (e) => {
+    e.preventDefault()
+    //Reset errors
+    setErrors({});
+
+    // Validate email
+    if (!isValidEmail(email)) {
+      setErrors({ email: 'Invalid email' });
+      return;
+    }
+
+    // Call forgotPassword mutation
+    try {
+      const res = await forget({ email }).unwrap();
+      console.log('resuser>>', res.key);
+      const key = res.key;
+      // Check response and handle accordingly
+      if (res.message === 'OTP sent successfully') {
+        console.log('OTP sent successfully');
+        navigate('/OtpVerification', { state: { email, key } });
+      } else {
+        // Handle other response messages if needed
+        console.error('Forgot password failed:', res.message);
+        toast.error('Forgot password failed: ' + res.message);
+      }
+    } catch (error) {
+      // Handle mutation call errors
+      console.error('Forgot password error:', error);
+      toast.error('Forgot password error: ' + error.message);
+    }
+  };
+
+const handleGoogleLogin = async (credentialResponse) => {
+  try {
+    const decoded = jwtDecode(credentialResponse?.credential);
+    const userId = decoded.sub;
+    const name = decoded.name;
+    const email = decoded.email;
+    console.log('decoded', decoded);
+
+    // Call your API function for Google login
+    const res = await googleLogin({email, name}).unwrap()
+    
+    console.log("res", res);
+    if(res.message==='Success')
+    {
+    dispatch(setCredentials({...res.userDtls}))
+    navigate('/userLandingPage');
+    }
+    // else if(res.message=== 'User is blocked')
+    // {
+    //   toast.error('User is blocked');
+    // }
+    // else
+    // {
+    //   toast.error('Invalid User');
+    // }
+  } catch (error) {
+    console.error('Error during Google login:', error);
+    // Handle error if needed
+  }
+};
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -81,11 +144,16 @@ const UserLogin = () => {
         console.log('OTP sent successfully');
         navigate('/OtpVerification', { state: { email } });
       }
+
     } catch (error) {
       console.error('Login error:', error);
       if (error.status === 401 && error.data.message === 'User is blocked') {
         console.log('User is blocked');
         toast.error('User is blocked');
+      }
+      if (error.status === 401 && error.data.message === 'Invalid email or password') {
+        console.log('Invalid email or password');
+        toast.error('Invalid email or password');
       }
     } finally {
       setIsLoading(false);
@@ -93,7 +161,7 @@ const UserLogin = () => {
   };
 
   return (
-    <div className='p-5' style={{minHeight: '100vh', backgroundColor: 'rgba(56, 46, 126, 0.8)', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1), 0 0 20px rgba(0, 0, 0, 0.3)', borderRadius: '10px' }}>
+    <div className='p-5' style={{ minHeight: '100vh', backgroundColor: 'rgba(56, 46, 126, 0.8)', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1), 0 0 20px rgba(0, 0, 0, 0.3)', borderRadius: '10px' }}>
       <FormContainer>
         <h1 className='text-center'>Login</h1>
 
@@ -123,7 +191,7 @@ const UserLogin = () => {
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
-                setErrors({ ...errors, password: !isValidPassword( e.target.value) ? 'Invalid password' : '' });
+                setErrors({ ...errors, password: !isValidPassword(e.target.value) ? 'Invalid password' : '' });
               }}
               isInvalid={!!errors.password}
             />
@@ -132,26 +200,36 @@ const UserLogin = () => {
             </Form.Control.Feedback>
           </Form.Group>
 
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <Button disabled={isLoading} type='submit' className='mt-2 btn btn-primary btn-sm'>
-              Send OTP
-            </Button>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'left' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <Button disabled={isLoading} type='submit' className='mt-3 btn btn-primary btn-sm'>
+                Send OTP
+              </Button>
+              <Link className='forgot-password-link' onClick={handleForgotPassword}>
+                Forgot Password?
+              </Link>
+              {/* <Button disabled={isLoading} type='submit' className='mt-3 btn btn-primary btn-sm'>
+    Forget Password
+  </Button> */}
+            </div>
+
+
             <hr style={{ width: '100%', margin: '10px 0' }} />
-            <div>
+            <div style={{ padding: '0' }}>
               <GoogleLogin
-                onSuccess={(credentialResponse) => {
-                  const decoded = jwtDecode(credentialResponse?.credential);
-                  const userId = decoded.sub;
-                  const userName = decoded.name;
-                  const userEmail = decoded.email;
-                  console.log('decoded', decoded);
-                }}
+                onSuccess={handleGoogleLogin}
                 onError={() => {
                   console.log('Login Failed');
                 }}
+
               />
+
             </div>
+
+
           </div>
+
+
         </Form>
         {isLoading && <Loader />}
       </FormContainer>

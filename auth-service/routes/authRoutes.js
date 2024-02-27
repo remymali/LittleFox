@@ -3,10 +3,13 @@ const router=express.Router()
 import { authUser,registerUser,
     logoutUser,
     getUserProfile,
-    updateUserProfile,verifyOTP ,disableUser} from '../controller/authController.js';
+    updateUserProfile,verifyOTP ,disableUser,forgotPassword,resetPassword,googleLogin} from '../controller/authController.js';
 import {protect} from '../middleware/authMiddleware.js'
 
 router.post('/login',authUser)
+router.post('/forgotPassword',forgotPassword)
+router.post('/resetPassword',resetPassword)
+router.post('/googleLogin',googleLogin)
 router.post('/verifyOTP',verifyOTP)
 router.post('/register',registerUser)      
 router.post('/logout',logoutUser)

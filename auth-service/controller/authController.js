@@ -38,6 +38,82 @@ const verifyOTP = asyncHandler(async (req, res) => {
         res.status(400).json({ message: "OTP entered is not valid." })
     }
 })
+
+//Forgotpassword
+//@des  Auth user/Forgotpassword
+//route POST  post/api/users/Forgotpassword
+const forgotPassword = asyncHandler(async (req, res) => {
+    try { console.log("req.bodyforgot",req.body);
+        const user = await User.findOne({ email: req.body.email });
+
+        if (user) {
+            let otp = otpGenerator.generate(6, {
+                upperCaseAlphabets: false,
+                lowerCaseAlphabets: false,
+                specialChars: false,
+            });
+            console.log("OTP>>", otp);
+            user.otp = otp;
+            await user.save();
+            // Send OTP via email
+            sendOtpEmail(req.body.email, otp);
+            res.status(201).json({ message: 'OTP sent successfully', key:'forgotpassword' });
+           
+        } else {
+            res.status(404).json({ message: 'Users not found' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server Error' });
+    }
+});
+
+const resetPassword=asyncHandler(async(req,res)=>{
+    console.log(req.body.email);
+    const user= await User.findOne({email:req.body.email})
+    if(!user)
+    {
+        return res.status(404).json({message:"User not found"})
+    }
+    else{
+        user.password=req.body.password|| user.password 
+        const updatedUser=await user.save()
+        res.status(200).json({message:"Password Reset Successfully",updatedUser:updatedUser})
+    }
+})
+
+
+const googleLogin=asyncHandler(async(req,res)=>{
+    console.log("req",req.body)
+    const {email,name}=req.body
+    const user = await User.findOne({ email });
+    console.log("user.isBlocked", user.isBlocked);
+    
+    if (user.isBlocked) {
+        console.log("jshjhsj");
+        res.status(401).json({ message: "User is blocked" });
+    } else {if (user) {
+        generateToken(res, user._id, user.role, user.email);
+
+        // let otp = otpGenerator.generate(6, {
+        //     upperCaseAlphabets: false,
+        //     lowerCaseAlphabets: false,
+        //     specialChars: false,
+        // });
+        // console.log("OTP>>", otp);
+        // user.otp = otp;
+        // await user.save();
+        // Send OTP via email
+        // sendOtpEmail(email, otp);
+        res.status(201).json({ message: 'Success',userDtls:user });
+    } else {
+        res.status(401).json({ message: "Invalid email or password" });
+        throw new Error("Invalid email or password");
+    }
+}
+});
+
+
 //@des  Auth user/set token
 //route POST  post/api/users/auth
 //@access Public
@@ -187,10 +263,13 @@ const disableUser = asyncHandler(async (req, res) => {
 
 export {
     authUser,
+    googleLogin,
     registerUser,
     logoutUser,
     getUserProfile,
     updateUserProfile,
     verifyOTP,
+    forgotPassword,
+    resetPassword,
     disableUser
 };

@@ -30,7 +30,35 @@ console.log(teachers)
     setEditedTeacherData({});
     refetch();
   };
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(2);
 
+  // Filtering
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredTeachers, setFilteredTeachers] = useState([]);
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+    setCurrentPage(1); // Reset to first page when search query changes
+  };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  
+
+  useEffect(() => {
+    if (!isLoading && !error) {
+      const filteredResults = teachers.filter((teacher) =>
+      teacher.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      teacher.email.toLowerCase().includes(searchQuery.toLowerCase()) 
+      );
+      setFilteredTeachers(filteredResults);
+    }
+  }, [searchQuery, teachers, isLoading, error]);
+  const currentTeachers = filteredTeachers?.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
   if (isLoading || error) {
     return (
       <table className="Teachers-table">
@@ -48,6 +76,16 @@ console.log(teachers)
   }
 
   return (
+    <div>
+       <div className='Search-Container'>
+       <input
+        type="text"
+        value={searchQuery}
+        onChange={handleSearchChange}
+        placeholder="Search by name or email..."
+        className='search-input'
+      />
+    </div>
     <table className="Teachers-table">
       <thead>
         <tr>
@@ -69,7 +107,7 @@ console.log(teachers)
           </tbody>
         ) : (
           <tbody>
-            {teachers.map((user) => (
+            {currentTeachers && currentTeachers?.map((user) => (
               <tr key={user._id}>
                 <td><pre>{user._id}</pre></td>
                 <td>
@@ -117,6 +155,17 @@ console.log(teachers)
         )
       }
     </table>
+    {/* Pagination */}
+    <ul className="pagination">
+        {Array.from({ length: Math.ceil(filteredTeachers?.length / itemsPerPage) }, (_, i) => (
+          <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}>
+            <button onClick={() => paginate(i + 1)} className="page-link">
+              {i + 1}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 

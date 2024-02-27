@@ -39,6 +39,23 @@ const getMarksDtl=asyncHandler(async (req, res) => {
       res.status(400).json({ message: error.message });
     }
   });
+  
+  const getStudentNotice= asyncHandler(async (req,res)=>{
+    try {
+      const { id }=req.params
+      const student = await Student.findOne({ email: id });
+      
+      if (!student) {
+        return res.status(404).json({ message: 'Student not found' });
+      }
+
+      const messages=student.schoolMessages
+      res.status(200).json(messages)
+    } catch (error) {
+      
+    }
+
+  })
 
   const saveMessage = asyncHandler(async (message) => {
     try {
@@ -73,4 +90,4 @@ const getMarksDtl=asyncHandler(async (req, res) => {
   
   
 
-export { getAttendanceDtl,getMarksDtl,saveMessage };
+export { getAttendanceDtl,getMarksDtl,saveMessage,getStudentNotice };

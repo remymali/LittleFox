@@ -12,6 +12,7 @@ const OtpVerification = () => {
   const { state } = useLocation();
   const email = state?.email || '';
   const password = state?.password || '';
+  const key = state?.key  || '';
 
   const [otp, setOtp] = useState('');
   const [otpError, setOtpError] = useState('');
@@ -43,17 +44,7 @@ const OtpVerification = () => {
   }, []);
 
 
-  // useEffect(() => {
-    
-  //       navigate("/OtpVerification");
-    
-  // }, [navigate]);
 
-  useEffect(() => {
-    if (otpTimer === 0) {
-      // Handle OTP expiration, e.g., show a message or take action
-    }
-  }, [otpTimer]);
 
   const handleResendOTP = async (e) => {
     e.preventDefault();
@@ -82,15 +73,21 @@ const OtpVerification = () => {
       // Verify OTP   
       const res = await verifyOTP({ email: email, otp }).unwrap();
       console.log('Verification response:', res);
+      console.log("key",key)
+      if(key==='forgotpassword')
+      {
+        navigate('/regeneratePassword',{state:{email}});
+      }
+      else {
 
-      if (res.message === 'OTP verification successful') {
         dispatch(setCredentials({ ...res }));
         navigate('/userLandingPage');
         console.log('OTP verification successful. Redirecting to the landing page.');
-      } else {
-        console.error('OTP verification failed:', res.message);
-        setOtpError('OTP entered is not correct');
       }
+      //  else {
+      //   console.error('OTP verification failed:', res.message);
+      //   setOtpError('OTP entered is not correct');
+      // }
     } catch (error) {
       console.error('OTP verification error:', error);
       setOtpError('OTP entered is not correct');

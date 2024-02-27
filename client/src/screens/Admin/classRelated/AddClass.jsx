@@ -21,11 +21,7 @@ const AddClass = () => {
   const { userInfo } = useSelector((state) => state.auth);
   const {data:teachers,isLoading:teachersLoading} =useGetTeachersQuery();
   const [addClass, { isLoading }] = useAddClassMutation();
-  useEffect(()=>{
-    const fetchTeachers=(()=>{
-
-    })
-  })
+  
   useEffect(() => {
     if (userInfo) {
       // Redirect to a different route or handle authentication differently

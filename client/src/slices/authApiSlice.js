@@ -10,6 +10,27 @@ export const userApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    googleLogin: builder.mutation({
+      query: (data) => ({
+        url: `${USERS_URL}/googleLogin`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
+    forget: builder.mutation({
+      query: (data) => ({
+        url: `${USERS_URL}/forgotPassword`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
+    resetPassword: builder.mutation({
+      query: (data) => ({
+        url: `${USERS_URL}/resetPassword`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
     logout: builder.mutation({
         query: () => ({
           url: `${USERS_URL}/logout`,
@@ -40,5 +61,5 @@ export const userApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useLoginMutation, useLogoutMutation, useRegisterMutation ,useUpdateUserMutation,useVerifyOTPMutation} =
+export const { useLoginMutation, useForgetMutation,useGoogleLoginMutation,useResetPasswordMutation,useLogoutMutation, useRegisterMutation ,useUpdateUserMutation,useVerifyOTPMutation} =
   userApiSlice;

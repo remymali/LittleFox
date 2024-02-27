@@ -23,11 +23,12 @@ const { date, attendance } = req.body;
     
     try {
       // Find the student by their studentId and update their attendance record
-      await Student.findOneAndUpdate(
+     const attendanceAdded= await Student.findOneAndUpdate(
         { _id: studentId },
         { $push: { attendance: { date, status } } },
         { new: true } // Return the updated document
       );
+      return res.status(200).json(attendanceAdded)
     } catch (error) {
       console.error(`Error adding attendance for student ${studentId}:`, error);
       // Handle error if necessary

@@ -7,8 +7,46 @@ import { useSelector } from 'react-redux';
 
 const ClassTable = () => {
   const { userInfo } = useSelector((state) => state.auth);
-  const { data: sclass, isLoading, error, refetch } = useGetClassQuery();
+  
+  const { data: sclass, isLoading, error,refetch } = useGetClassQuery();
   const { data: teachers, isLoading: teachersLoading } = useGetTeachersQuery();
+
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(2); // Number of items per page
+
+  // Search
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredItems, setFilteredItems] = useState([]);
+  // Calculate index of the last item on the current page
+  const indexOfLastItem = currentPage * itemsPerPage;
+  // Calculate index of the first item on the current page
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  // Get the current items to display
+  const currentItems = filteredItems?.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  // Handle search input change
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+    setCurrentPage(1); // Reset to first page when searching
+  };
+  useEffect(() => {
+    if (!isLoading && !error) {
+      const filteredResults = sclass.filter((item) =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.division.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredItems(filteredResults);
+    }
+  }, [searchQuery, sclass, isLoading, error]);
+  
+  
+
+  // Get items to display after applying search filter
+  const searchedItems = filteredItems?.slice(indexOfFirstItem, indexOfLastItem);
   console.log("teachers", teachers)
   useEffect(() => {
     refetch();
@@ -51,6 +89,17 @@ const ClassTable = () => {
   }
 
   return (
+    <div>
+      {/* Search input field */}
+      <div className='Search-Container'>
+    <input
+      type="text"
+      value={searchQuery}
+      onChange={handleSearchChange}
+      placeholder="Search by name or division..."
+      className='search-input'
+    />
+    </div>
     <table className="Teachers-table">
       <thead>
         <tr>
@@ -74,7 +123,7 @@ const ClassTable = () => {
           </tbody>
         ) : (
           <tbody>
-            {sclass.map((user) => (
+            {currentItems && currentItems.map((user) => (
               <tr key={user._id}>
                 <td><pre>{user._id}</pre></td>
                 <td>
@@ -143,6 +192,17 @@ const ClassTable = () => {
         )
       }
     </table>
+    {/* Pagination */}
+    <ul className="pagination">
+        {Array.from({ length: Math.ceil(filteredItems?.length / itemsPerPage) }, (_, i) => (
+          <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}>
+            <button onClick={() => paginate(i + 1)} className="page-link">
+              {i + 1}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 

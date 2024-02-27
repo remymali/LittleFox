@@ -11,7 +11,7 @@ const PORT=process.env.PORT||8000
 app.use(cors())
 
 
-app.use('/api/auth-service',proxy('http://localhost:8001'))
+app.use('/api/auth-service',proxy('http://localhost:8004'))
 app.use('/api/user-service',proxy('http://localhost:8005'))
 app.use('/api/accademic-service',proxy('http://localhost:8006'))
 app.use('/api/notice-service',proxy('http://localhost:8007'))

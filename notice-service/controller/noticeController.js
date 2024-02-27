@@ -8,9 +8,10 @@ import {saveNoticeAndSendMessage} from '../Kafka/noticeProducer.js'
 //get class details
 const getNotice = asyncHandler(async (req, res) => {
     try {
-        const newNotice = await notice.find({});
-        console.log("notice",newNotice)
-        res.status(200).json(newNotice)
+        console.log("entered in getnotice")
+        const allNotices = await notice.find({});
+        console.log("notice",allNotices)
+        res.status(200).json(allNotices)
 
     } catch (error) {
         res.status(400).json({ message: error.message })

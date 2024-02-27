@@ -3,7 +3,7 @@ const NOTICE_URL = '/api/notice-service/notice';
 
 export const noticeApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        getNotice: builder.query({
+        listNotice: builder.query({
             query: () => ({
                 url: `${NOTICE_URL}/getNotice`,
                 method: 'GET',
@@ -27,5 +27,5 @@ export const noticeApiSlice = apiSlice.injectEndpoints({
     }),
 });
 
-export const { useAddNoticeMutation ,useGetNoticeQuery,useEditNoticeMutation} =
+export const { useAddNoticeMutation ,useListNoticeQuery,useEditNoticeMutation} =
     noticeApiSlice;

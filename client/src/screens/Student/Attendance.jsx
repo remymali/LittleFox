@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useGetAttendanceQuery } from '../../slices/studentApiSlice.js';
 import { useSelector } from 'react-redux';
 import FormContainer from '../../components/formContainer.jsx';
+import  Calendar  from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+
 
 import { useNavigate } from 'react-router-dom';
 
@@ -25,25 +29,36 @@ const StudentAttendance = () => {
     return date.toLocaleDateString(undefined, options);
   };
 
+  // Function to customize event content and color based on status
+  const eventContent = (arg) => {console.log("arg",arg)
+  let content=''
+  if(arg.event.backgroundColor==='green')
+  {
+    content="present"
+  }
+  else if(arg.event.backgroundColor==='red'){
+    content="absent"
+  }
+    return {
+      
+      html: `<div style="color: ${arg.event.backgroundColor};">${content}</div>`
+    };
+  };
+
   return (
-    <FormContainer >
-      <h2>Student Attendance</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {attendance.map((record, index) => (
-            <tr key={index}>
-              <td>{formatDate(record.date)}</td>
-              <td>{record.status}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <FormContainer>
+      <h2 className='p-3'> Attendance</h2>
+      <Calendar
+        plugins={[dayGridPlugin, interactionPlugin]}
+        initialView="dayGridMonth"
+        events={attendance.map((record, index) => ({
+          id: index,
+          title: record.status,
+          start: new Date(record.date),
+          backgroundColor: record.status === 'Present' ? 'green' : 'red' // Change color based on status
+        }))}
+        eventContent={eventContent} // Apply custom event content
+      />
     </FormContainer>
   );
 };

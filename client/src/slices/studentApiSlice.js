@@ -16,6 +16,12 @@ export const studentApiSlice = apiSlice.injectEndpoints({
           method: 'GET',
         }),
       }),
+      getNotice: builder.query({
+        query: (id) => ({
+          url: `${Student_USERS_URL}/studentNotice/${id}`,
+          method: 'GET',
+        }),
+      }),
    
      
   }),
@@ -23,5 +29,6 @@ export const studentApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useGetAttendanceQuery,
-  useGetExamsQuery
+  useGetExamsQuery,
+  useGetNoticeQuery
 } = studentApiSlice;

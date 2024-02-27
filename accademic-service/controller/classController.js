@@ -21,19 +21,28 @@ const addClass = asyncHandler(async (req, res) => {
     try {
 
         const { name, division, teacher } = req.body
-        const classExist = await sClass.findOne({ name ,division})
+        // const classExist = await sClass.findOne({name: name ,division:division})
+        const classExist = await sClass.findOne({
+            name: { $regex: new RegExp("^" + name + "$", "i") },
+            division: { $regex: new RegExp("^" + division + "$", "i") }
+        });
+        console.log("req.body",req.body)
+        console.log("classexist",classExist)
         if (classExist) {
             console.log('classExist')
-            res.status(400)
+            res.status(400).json({message:"Class already exists"})
             throw new Error("Class already exists")
         }
-        console.log("req.body", req.body)
+       
+        else
+        {
         const newclass = await sClass.create({
             name,
             division,
             teacher
         })
         await newclass.save();
+    
         if (newclass) {
             res.status(201).json({
                 _id: newclass._id,
@@ -46,6 +55,7 @@ const addClass = asyncHandler(async (req, res) => {
             res.status(400)
             throw new Error("Invalid user data")
         }
+    }
     } catch (err) {
         res.status(500).json(err);
     }
