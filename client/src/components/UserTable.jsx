@@ -10,30 +10,28 @@ const UserTable = ({ selectedClass, page, limit }) => {
   const { userInfo } = useSelector((state) => state.auth);
   const { data: users, isLoading, error, refetch } = useGetUsersQuery({ selectedClass, page, limit });
   //Search
-  const [searchQuery,setSearchQuery]=useState('');
-  const[filteredUsers,setFilteredUsers]=useState([])
-  useEffect(()=>{
-    if(!isLoading||!error)
-    {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredUsers, setFilteredUsers] = useState([])
+  useEffect(() => {
+    if (!isLoading || !error) {
       setFilteredUsers(users)
     }
-  },[isLoading,users,error])
-  useEffect(()=>{
-    if(!isLoading  && !error)
-    {
-      const filteredResults=users.filter((user)=>
+  }, [isLoading, users, error])
+  useEffect(() => {
+    if (!isLoading && !error) {
+      const filteredResults = users.filter((user) =>
         user.name.toLowerCase().includes(searchQuery.toLowerCase())
-        ||user.email.toLowerCase().includes(searchQuery.toLowerCase())
+        || user.email.toLowerCase().includes(searchQuery.toLowerCase())
       )
       setFilteredUsers(filteredResults)
     }
-  
-  },[searchQuery,users,isLoading,error])
 
- 
-  
+  }, [searchQuery, users, isLoading, error])
 
-  const handleSearchChange=(event)=>{
+
+
+
+  const handleSearchChange = (event) => {
     setSearchQuery(event.target.value)
   }
   // Pagination
@@ -56,7 +54,7 @@ const UserTable = ({ selectedClass, page, limit }) => {
   useEffect(() => {
     refetch({ selectedClass, page: currentPage, limit }); // Update refetch with pagination parameters
   }, [selectedClass, currentPage, limit]);
-  
+
 
   const [editedUserId, setEditedUserId] = useState(null);
   const [editedUserData, setEditedUserData] = useState({});
@@ -93,7 +91,18 @@ const UserTable = ({ selectedClass, page, limit }) => {
   const [editUser, { isLoading: isEditing }] = useEditUserMutation();
 
   const handleEditUser = async (userId, updatedUserData) => {
-    const data = await editUser({ id: userId, data: updatedUserData }).unwrap();
+    console.log("userId", userId)
+    console.log("updatedUserData", updatedUserData)
+    const {name,email,profileImg}=updatedUserData
+    console.log("name",name)
+    console.log("email",email)
+    console.log("file",profileImg)
+    const formData=new FormData()
+      formData.append('name',name);
+      formData.append('email',email);
+      formData.append('file',profileImg);
+      console.log("formData",formData)
+    const data = await editUser({ id: userId, data: formData }).unwrap();
     console.log(data);
     setEditedUserId(null);
     setEditedUserData({});
@@ -119,99 +128,113 @@ const UserTable = ({ selectedClass, page, limit }) => {
   return (
     <div>
       <div className='Search-Container'>
-      <input type='text' value={searchQuery} onChange={handleSearchChange} placeholder='Search' className='search-input'/>
+        <input type='text' value={searchQuery} onChange={handleSearchChange} placeholder='Search' className='search-input' />
       </div>
-    <table className="users-table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Photo</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      {
-        (isLoading || error) ? (
-          <tbody>
-            <tr>
-              <td>{isLoading ? 'Loading...' : 'Error...'}</td>
-              <td>{isLoading ? 'Loading...' : 'Error...'}</td>
-              <td>{isLoading ? 'Loading...' : 'Error...'}</td>
-              <td>{isLoading ? 'Loading...' : 'Error...'}</td>
-              <td>{isLoading ? 'Loading...' : 'Error...'}</td>
-            </tr>
-          </tbody>
-        ) : (
-          <tbody>
-           {/* {Array.isArray(users) && users.map((user) => ( */}
-           {Array.isArray(currentUsers) && currentUsers.map((user) => (
-              <tr key={user._id}>
-                <td><pre>{user._id}</pre></td>
-                <td>
-                  {editedUserId === user._id ? (
-                    <input
-                      type="text"
-                      value={editedUserData.name || user.name}                      
-                    />
-                  ) : (
-                    user.name
-                  )}
-                </td>
-                <td>
-                  {editedUserId === user._id ? (
-                    <input
-                      type="text"
-                      value={editedUserData.email || user.email}
-                      onChange={(e) => setEditedUserData({ ...editedUserData, email: e.target.value })}
-                    />
-                  ) : (
-                    user.email
-                  )}
-                </td>
-                <td>
-                  {editedUserId === user._id ? (
-                    <input
-                      type="text"
-                      value={editedUserData.profileImg || user.profileImg}
-                      onChange={(e) => setEditedUserData({ ...editedUserData, profileImg: e.target.value })}
-                    />
-                  ) : (
-                    <img src={`/profileImg/${user.profileImg}`} alt="Profile" style={{ width: '100px', height: '100px' }} />
-                  )}
-                </td>
-                <td>
-                  {editedUserId === user._id ? (
-                    <button
-                      onClick={() => handleEditUser(user._id, editedUserData)}
-                      disabled={isEditing}
-                    >
-                      Save
-                    </button>
-                  ) : (
-                    <>
-                      <button className="edit" onClick={() => setEditedUserId(user._id)} disabled={userInfo._id === user._id}>Edit</button>
-                      {!user.isBlocked?(
-                      <button className="disabled" onClick={() => handleDisableUser(user._id)} disabled={isBlocking || userInfo._id === user._id}>
-                      Disable
-                      </button>):(
-                      <button className="enabled" onClick={() => handleEnableUser(user._id)} disabled={isNonBlocking || userInfo._id === user._id}>
-                      Enable
-                      </button>)
-                      }
-                    </>
-                  )}
-                </td>
+      <table className="users-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Photo</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        {
+          (isLoading || error) ? (
+            <tbody>
+              <tr>
+                <td>{isLoading ? 'Loading...' : 'Error...'}</td>
+                <td>{isLoading ? 'Loading...' : 'Error...'}</td>
+                <td>{isLoading ? 'Loading...' : 'Error...'}</td>
+                <td>{isLoading ? 'Loading...' : 'Error...'}</td>
+                <td>{isLoading ? 'Loading...' : 'Error...'}</td>
               </tr>
-            ))}
-          </tbody>
-        )
-      }
-    </table>
-   
-  
- 
- {/* Pagination */}
+            </tbody>
+          ) : (
+            <tbody>
+              {/* {Array.isArray(users) && users.map((user) => ( */}
+              {Array.isArray(currentUsers) && currentUsers.map((user) => (
+                <tr key={user._id}>
+                  <td><pre>{user._id}</pre></td>
+                  <td>
+                    {editedUserId === user._id ? (
+                      <input
+                        type="text"
+                        value={editedUserData.name || user.name}
+                        onChange={(e) => setEditedUserData({ ...editedUserData, name: e.target.value })}
+                      />
+                    ) : (
+                      user.name
+                    )}
+                  </td>
+                  <td>
+                    {editedUserId === user._id ? (
+                      <input
+                        type="text"
+                        value={editedUserData.email || user.email}
+                        onChange={(e) => setEditedUserData({ ...editedUserData, email: e.target.value })}
+                      />
+                    ) : (
+                      user.email
+                    )}
+                  </td>
+                  <td>
+  {editedUserId === user._id ? (
+    <>
+      {/* Show existing image */}
+      <img src={`/profileImg/${user.profileImg}`} alt="Profile" style={{ width: '100px', height: '100px' }} />
+      <input
+        type="file"
+        onChange={(e) => {
+          const selectedFile = e.target.files[0];
+          if (selectedFile) {
+            setEditedUserData({ ...editedUserData, profileImg: selectedFile });
+          }
+        }}
+        style={{ marginTop: '5px' }}
+      />
+    </>
+  ) : (
+    <img src={`/profileImg/${user.profileImg}`} alt="Profile" style={{ width: '100px', height: '100px' }} />
+  )}
+</td>
+
+
+
+
+                  <td>
+                    {editedUserId === user._id ? (
+                      <button
+                        onClick={() => handleEditUser(user._id, editedUserData)}
+                        disabled={isEditing}
+                      >
+                        Save
+                      </button>
+                    ) : (
+                      <>
+                        <button className="edit" onClick={() => setEditedUserId(user._id)} disabled={userInfo._id === user._id}>Edit</button>
+                        {!user.isBlocked ? (
+                          <button className="disabled" onClick={() => handleDisableUser(user._id)} disabled={isBlocking || userInfo._id === user._id}>
+                            Disable
+                          </button>) : (
+                          <button className="enabled" onClick={() => handleEnableUser(user._id)} disabled={isNonBlocking || userInfo._id === user._id}>
+                            Enable
+                          </button>)
+                        }
+                      </>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          )
+        }
+      </table>
+
+
+
+      {/* Pagination */}
       <div className="pagination-container">
         <ul className="pagination">
           {Array.from({ length: Math.ceil(users?.length / usersPerPage) }, (_, i) => (
@@ -223,7 +246,7 @@ const UserTable = ({ selectedClass, page, limit }) => {
           ))}
         </ul>
       </div>
-    
+
     </div>
   )
 };

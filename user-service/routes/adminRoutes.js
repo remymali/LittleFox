@@ -1,6 +1,6 @@
 import express from 'express';
 import {isAdmin, protect} from '../middleware/authMiddleware.js'
-import {getStudents,studRegister,getTeachers,teachRegister,disableStudent,enableStudent} from '../controller/adminController.js'
+import {getStudents,studRegister,editStudent,getTeachers,teachRegister,disableStudent,enableStudent} from '../controller/adminController.js'
 
 import multer from 'multer'
 import uuidv4 from 'uuidv4'
@@ -18,8 +18,10 @@ const storage=multer.diskStorage({
     }
 })
 
+
 var upload = multer({
     storage: storage,
+    
     // fileFilter: (req, file, cb) => {
     //     if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
     //         cb(null, true);
@@ -28,10 +30,11 @@ var upload = multer({
     //         return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
     //     }
     // }
+    
 });
 router.get('/student',protect,isAdmin,getStudents);
-// router.post('/register',protect,isAdmin,studRegister);
 router.post('/register',upload.single('file'),protect,isAdmin,studRegister);
+router.post('/editStudent/:id',upload.single('file'),protect,isAdmin,editStudent)
 router.get('/teacher',protect,isAdmin,getTeachers);
 router.post('/teachRegister',protect,isAdmin,teachRegister);
 router.put('/disableStudent/:id',protect,isAdmin,disableStudent)

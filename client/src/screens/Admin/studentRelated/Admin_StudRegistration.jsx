@@ -90,7 +90,7 @@ const Admin_StudRegistration = () => {
           {
             sclassLoading?(<option disabled>Class loading...</option>):
 
-            (classes.map((element)=><option key={classes._id} value={element._id}>{element.name}</option>))
+            (classes.map((element)=><option key={classes._id} value={element._id}>{element.name+"-"+element.division}</option>))
           }
         </Form.Select >
       </Form.Group>

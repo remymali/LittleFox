@@ -61,7 +61,7 @@ const UserLogin = () => {
   };
   const isValidPassword = (password) => {
 
-    return (password.length === 5)
+    return (password.length <5)
   }
 
   const handleForgotPassword = async (e) => {

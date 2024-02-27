@@ -8,13 +8,12 @@ import axios from 'axios'
 //get student details
 const getStudents = asyncHandler(async (req, res) => {
     try {
-        console.log("hai");
         const {selectedClass} = req.query; // Access the selected class from query parameters
 
-        console.log("selectedClass",selectedClass);
+      
         const users = await Student.find({ class:selectedClass });
         
-        console.log("users",users);
+        
         res.status(200).json(users);
     } catch (error) {
         res.status(400).json({ message: error.message });
@@ -33,7 +32,6 @@ const studRegister = asyncHandler(async (req, res) => {
     const userExist = await Student.findOne({ email })
     //console.log("userExist",userExist)
     if (userExist) {
-        console.log('userexist')
         res.status(400)
         throw new Error("User already exists")
     }
@@ -48,7 +46,7 @@ const studRegister = asyncHandler(async (req, res) => {
     })
 
     try {
-        await axios.post('http://localhost:8001/auth/register', {
+        await axios.post('http://localhost:8004/auth/register', {
             name,
             email,
             password,
@@ -73,13 +71,57 @@ const studRegister = asyncHandler(async (req, res) => {
         throw new Error("Invalid user data")
     }
 })
+
+//edit student
+//@des  edit student
+//route POST  POST/api/admin/editStudent
+const editStudent = asyncHandler(async (req, res) => {
+    try {
+        const { id } = req.params;
+        const email = req.body.email;
+        const name = req.body.name;  
+        console.log("length",name.length)
+        // Check if a student with the given ID exists
+        const studentExist = await Student.findOne({ _id: id });
+        if (!studentExist) {
+            res.status(404).json({ message: "Student not found" });
+            throw new Error('Student not found');
+        }
+
+        // Update name and email if provided in the request body 
+        if ( email !=='undefined')
+        {
+            studentExist.email = email;
+        }
+        if ( name !== 'undefined')
+        {
+            studentExist.name = name;
+        }
+
+        // Check if a file is uploaded (profileImg)
+        if (req.file) {
+            // Update profileImg with the filename (assuming multer saves the uploaded file as 'filename')
+            studentExist.profileImg = req.file.filename;
+        }
+
+        // Save the updated student
+        const updatedStudent = await studentExist.save();
+
+        res.status(200).json(updatedStudent); // Respond with the updated student data
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+
+  
+  
 //Teacher
 
 //get Teacher details
 const getTeachers=asyncHandler(async(req,res)=>{
     try {
         const teachers= await Teacher.find({role:"teacher"});
-        console.log("teachers",teachers);
         res.status(200).json(teachers)
     } catch (error) {
         res.status(400).json({message:error.message})
@@ -91,12 +133,12 @@ const getTeachers=asyncHandler(async(req,res)=>{
 //@access Public
 const teachRegister = asyncHandler(async (req, res) => {
     const { name, email, password,role } = req.body
-    console.log(req.body)
+    
     const userExist = await Teacher.findOne({ email })
-    console.log(userExist)
+    
 
     if (userExist) {
-        console.log('userexist')
+        
         res.status(400)
         throw new Error("User already exists")
     }
@@ -109,7 +151,7 @@ const teachRegister = asyncHandler(async (req, res) => {
     })
 
     try {
-        await axios.post('http://localhost:8001/auth/register', {
+        await axios.post('http://localhost:8004/auth/register', {
             name,
             email,
             password,
@@ -140,13 +182,13 @@ const disableStudent=asyncHandler(async(req,res)=>{
     try {
         const {id}=req.params
         const student =await Student.findById({_id:id})
-        console.log("student",student)
+        
         if(student)
         {
         student.isBlocked=true;
         await student.save();
         try {
-            await axios.put('http://localhost:8001/auth/isBlocking', {
+            await axios.put('http://localhost:8004/auth/isBlocking', {
              isBlocked:true,
              email:student.email
             });
@@ -171,13 +213,13 @@ const disableStudent=asyncHandler(async(req,res)=>{
 const enableStudent=asyncHandler(async(req,res)=>{
     const {id}=req.params
     const student =await Student.findById({_id:id})
-    console.log("student",student)
+    
     if(student)
     {
     student.isBlocked=false;
     await student.save();
     try {
-        await axios.put('http://localhost:8001/auth/isnonBlocking', {
+        await axios.put('http://localhost:8004/auth/isnonBlocking', {
          isBlocked:false,
          email:student.email
         });
@@ -193,4 +235,4 @@ const enableStudent=asyncHandler(async(req,res)=>{
     })
 
 
-export {getStudents,studRegister,getTeachers,teachRegister,disableStudent,enableStudent}
+export {getStudents,studRegister,getTeachers,teachRegister,disableStudent,enableStudent,editStudent}

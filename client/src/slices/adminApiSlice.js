@@ -43,8 +43,8 @@ export const adminApiSlice = apiSlice.injectEndpoints({
     }),
     editUser: builder.mutation({
       query: ({ id, data }) => ({
-        url: `${ADMIN_USERS_URL}/${id}`,
-        method: 'PUT',
+        url: `${ADMIN_USERS_URL}/editStudent/${id}`,
+        method: 'POST',
         body: data,
       }),
     }),

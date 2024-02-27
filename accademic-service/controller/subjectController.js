@@ -19,11 +19,11 @@ const getSubject=asyncHandler(async(req,res)=>{
 const addSubject=asyncHandler(async(req,res)=>{
     try {
         const {name,subCode,teacher}=req.body
-        const subjectExist = await Subject.findOne({subName:name})
+        const subjectExist = await Subject.findOne({subName: { $regex: new RegExp("^" + name + "$", "i") }})
         if(subjectExist)
         {   
             console.log("Subject already exist")
-            res.status(400)
+            res.status(400).json({message:'Subject already exist.'})
             throw new "Subject already exist."
         }
        const newSubject=await Subject.create({
