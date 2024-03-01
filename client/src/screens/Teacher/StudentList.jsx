@@ -6,7 +6,10 @@ import { useSelector } from 'react-redux';
 
 const UserTable = () => {
   const { userInfo } = useSelector((state) => state.auth);
-  const { data: users, isLoading, error, refetch } = useGetStudentsQuery();
+   
+  const email=userInfo.email
+  console.log("email",email)
+  const { data: users, isLoading, error, refetch } = useGetStudentsQuery(email);
   console.log("users",users)
   useEffect(() => {
     refetch();

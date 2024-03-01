@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import { Form, Button } from 'react-bootstrap';
 import { useSelector,useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
@@ -6,17 +6,32 @@ import {useAddNoticeMutation} from '../../../slices/noticeApiSlice.js'
 import FormContainer from '../../../components/formContainer.jsx';
 import Loader from '../../../components/Loader.jsx';
 import { toast } from 'react-toastify';
+import { generateToken,messaging } from '../../../Notification/firebase.js'
+import { onMessage } from 'firebase/messaging';
+
+
+
 const addNotice = () => {
 const [title,setTitle]=useState('')
 const [details,setDetails]=useState('')
 const [date,setDate]=useState('')
+const [pushToken,setPushToken]=useState('')
 
 const dispatch = useDispatch();
 const navigate = useNavigate();
+
+useEffect(()=>{
+  generateToken();
+  onMessage(messaging,(payload)=>{
+    console.log("payload",payload)
+    navigate('/listNotice');
+  })
+ },[navigate])
 const [addNotice,{isLoading}]=useAddNoticeMutation()
 const { userInfo } = useSelector((state) => state.auth);
 
-const submitHandler=(async(e)=>{
+
+const submitHandler = async (e) => {
   e.preventDefault();
   console.log("Submitting form...");
   // Client-side form validation
@@ -25,15 +40,15 @@ const submitHandler=(async(e)=>{
     return;
   }
   try {
-    const noticedtl={title:title,details:details,date:date,sender:userInfo}
-   
-  const res = await addNotice(noticedtl).unwrap();
-  console.log("res",res)
-  navigate('/showNotice');
-} catch (err) {
-  toast.error(err?.data?.message || err.error);
-}
-})
+    const noticedtl = { title: title, details: details, date: date, sender: userInfo };
+    const res = await addNotice(noticedtl); // Remove unwrap() here
+    console.log("res", res.payload); // Access the payload directly
+    navigate('/listNotice');
+  } catch (err) {
+    toast.error(err?.data?.message || err.error);
+  }
+};
+
   return (
     <FormContainer>
       <h1>Add Notice</h1>

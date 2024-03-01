@@ -7,7 +7,7 @@ import axios from 'axios'
 //get class details
 const getClass = asyncHandler(async (req, res) => {
     try {
-
+        console.log("teacher")
         const sclass = await sClass.find();
         res.status(200).json(sclass)
 

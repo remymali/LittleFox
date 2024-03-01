@@ -8,10 +8,13 @@ import { toast } from 'react-toastify';
 
 const AddAttendance = () => {
     const { userInfo } = useSelector((state) => state.auth);
+   
+    const email=userInfo.email
+    console.log("email",email)
     const [students, setStudents] = useState([]);
     const [selectedDate, setSelectedDate] = useState(new Date().toISOString().substr(0, 10));
     const [attendanceDtl, setAttendanceDtl] = useState([]);
-    const { data: users, isLoading, error, refetch } = useGetStudentsQuery();
+    const { data: users, isLoading, error, refetch } = useGetStudentsQuery(email);
     const [addAttendance, { isLoading: isAddingAttendance }] = useAddAttendanceMutation();
     const navigate = useNavigate();
 

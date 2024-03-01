@@ -1,5 +1,11 @@
 import { Kafka } from 'kafkajs';
 import { saveMessage } from '../controller/studentController.js';
+import  admin from 'firebase-admin';    
+import serviceAccount from '../utils/serviceAccountKey.json' assert { type: "json" };
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),   
+  });
 
 const kafka = new Kafka({
     clientId: 'user-service',
@@ -21,14 +27,25 @@ const run = async () => {
         // Run the consumer
         await consumer.run({
             eachMessage: async ({ topic, partition, message }) => {
-                try {                   
+                try {           
                     
                     // Parse the message value as JSON
                     const messageData = JSON.parse(message.value.toString());
-
+                    const { sender, title, details, date } = messageData    ;
+                    //console.log("message",message)        
+                    const pushMessage={
+                        data:{
+                          title:title,
+                          body:details
+                        },
+                        token: 'embwT1rCCplUIWRvxrinvp:APA91bGdkDB0zZKTqSJ0Z-ZjAOds9-ZrTtnVtkXx3E6c8CXf1GvFRUftZgKrbXWNPMFoX_nIqbtXfU8IcPHjb2DSHXixsv5MiWNkF3x4fpblrNcLQ6MZPQ3tDV1M0qWUdqVqBKGJ61fD'//'DEVICE_REGISTRATION_TOKEN',
+                      };
+                      const pushResponse = await admin.messaging().send(pushMessage);
+                      console.log('Successfully sent push notification:', pushResponse);
                     if (topic === 'notice-messages') {
                         // Process the message using the saveNoticeAndSendMessage function
                         await saveMessage(messageData);
+                       
                         console.log('Message saved and sent successfully');
                     }
                 } catch (error) {

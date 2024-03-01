@@ -5,8 +5,8 @@ const TEACHER_USERS_URL = '/api/user-service/teacher';
 export const teacherApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getStudents: builder.query({
-        query: () => ({
-          url: `${TEACHER_USERS_URL}/student`,
+        query: (id) => ({
+          url: `${TEACHER_USERS_URL}/student/${id}`,
           method: 'GET',
         }),
       }),

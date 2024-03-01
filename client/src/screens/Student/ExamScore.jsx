@@ -6,6 +6,7 @@ import FormContainer from '../../components/FormContainer'; // Import FormContai
 const ExamsScreen = () => {
     const { userInfo } = useSelector((state) => state.auth);
     const [userEmail, setUserEmail] = useState(userInfo.email);
+    const [totalMarks,setTotalMarks]=useState('')
     const { data: exams, isLoading, error } = useGetExamsQuery(userEmail);
 
     if (isLoading) {
@@ -20,7 +21,18 @@ const ExamsScreen = () => {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
         return new Date(dateString).toLocaleDateString(undefined, options);
     };
-
+    const calculateTotalMarks = (exams) => {
+        let totalMarks = 0;
+        
+        exams.forEach((exam) => {
+            exam.subjects.forEach((subject) => {
+                totalMarks += parseInt(subject.marks) || 0;
+            });
+        });
+    
+        return totalMarks;
+    };
+    
     return (
         <FormContainer>
              {exams.map((exam, index) => (
@@ -58,16 +70,25 @@ const ExamsScreen = () => {
                                         {exam.subjects.map((subject, subIndex) => (
                                             <li key={subIndex}>
                                                 {subject.marks}
+                                                
                                             </li>
                                         ))}
                                     </ul>
+                                    <hr></hr>
+                                    <div >Total Mark:    {calculateTotalMarks(exams)}</div>
+                                    
                                 </td>
+                                
                             </tr>
+                            
+                           
                         ))}
                     </tbody>
 
-
+                    
+                            
                 </table>
+               
             </div>
         </FormContainer>
     );

@@ -6,8 +6,11 @@ import { useNavigate } from 'react-router-dom';
 
 const UserTable = () => {
   const { userInfo } = useSelector((state) => state.auth);
+   
+    const email=userInfo.email
+    console.log("email",email)
   const navigate = useNavigate();
-  const { data: users, isLoading, error, refetch } = useGetStudentsQuery();
+  const { data: users, isLoading, error, refetch } = useGetStudentsQuery(email);
   console.log("users", users);
   useEffect(() => {
     refetch();

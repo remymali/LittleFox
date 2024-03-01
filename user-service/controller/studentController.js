@@ -2,6 +2,7 @@
 import asyncHandler from 'express-async-handler';
 import Student from '../models/studentModel.js';
 
+
 const getAttendanceDtl = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params; // Retrieve the id from req.params
@@ -60,9 +61,9 @@ const getMarksDtl=asyncHandler(async (req, res) => {
   const saveMessage = asyncHandler(async (message) => {
     try {
       // Extract data from the message
-      const { sender, title, details, date } = message;
-    
-      // Find all students
+      const { sender, title, details, date } = message; 
+            
+      // Find all students   
       const students = await Student.find();
     
       // Loop through each student and update their schoolMessages array
@@ -81,7 +82,9 @@ const getMarksDtl=asyncHandler(async (req, res) => {
         // Save the updated student document
         await student.save();
       }));
-    
+
+     
+     
       console.log('Message saved to all students:', message);
     } catch (error) {
       console.error('Error saving message to all students:', error);
