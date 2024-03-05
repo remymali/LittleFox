@@ -27,7 +27,7 @@ if(permission==="granted")
     const token=await getToken(messaging,{
         vapidKey:'BBQQgio1UYhl_szy1YAYzPfSBTjCWQGy163EGbwNavSMsD0h6oq_DHmvdGvPUvi-y1sQPLktXIWbIEYna9KLvVU'
     })
-    console.log("token",token)
+    console.log("tokenNew",token)
 }
 else{
     console.log('Notification permission not granted.');

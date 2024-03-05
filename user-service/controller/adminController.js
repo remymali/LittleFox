@@ -19,9 +19,19 @@ const getStudents = asyncHandler(async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 });  
-
   
-   
+
+//get student details
+const studentDtl = asyncHandler(async (req, res) => {
+    try {
+             
+        const students = await Student.find();     
+        res.status(200).json(students);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});     
+
 //@des  Register student
 //route POST  post/api/admin/register
 //@access Public
@@ -128,6 +138,39 @@ const getTeachers=asyncHandler(async(req,res)=>{
     }
     })  
    
+
+//edit teacher
+//@des  edit teacher
+//route POST  POST/api/admin/editTeacher
+const editTeacher = asyncHandler(async (req, res) => {
+    try {
+        const { id } = req.params;
+        const email = req.body.email;
+        const name = req.body.name;  
+        console.log("req.body.email",req.body.email)
+        // Check if a student with the given ID exists
+        const teacherExist = await Teacher.findOne({ _id: id });
+        if (!teacherExist) {
+            res.status(404).json({ message: "Teacher not found" });
+            throw new Error('Teacher not found');
+        }
+
+        
+        teacherExist.email =  req.body.email||teacherExist.email;
+       
+        teacherExist.name = name || teacherExist.name
+        
+
+       
+
+        // Save the updated student
+        const updatedTeacher = await teacherExist.save();
+
+        res.status(200).json(updatedTeacher); // Respond with the updated student data
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
 //@des  Register teacher
 //route POST  post/api/admin/register
 //@access Public
@@ -235,4 +278,4 @@ const enableStudent=asyncHandler(async(req,res)=>{
     })
 
 
-export {getStudents,studRegister,getTeachers,teachRegister,disableStudent,enableStudent,editStudent}
+export {getStudents,studRegister,getTeachers,teachRegister,disableStudent,enableStudent,editStudent,editTeacher,studentDtl}

@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
-import { useGetTeachersQuery, useDeleteTeacherMutation, useEditTeacherMutation } from '../slices/adminApiSlice.js';
+import { useGetTeachersQuery, useEditTeacherMutation } from '../slices/adminApiSlice.js';
 import './Table.css';
 import { useSelector } from 'react-redux';
 
@@ -14,14 +14,13 @@ console.log(teachers)
 
   const [editedTeacherId, setEditedTeacherId] = useState(null);
   const [editedTeacherData, setEditedTeacherData] = useState({});
-  const [deleteTeacher, { isLoading: isDeleting }] = useDeleteTeacherMutation();
   const [editTeacher, { isLoading: isEditing }] = useEditTeacherMutation();
 
-  const handleDeleteTeacher = (teacherId) => {
-    if (window.confirm('Are you sure you want to delete this user?')) {
-        deleteTeacher(teacherId).unwrap();
-    }
-  };
+  // const handleDeleteTeacher = (teacherId) => {
+  //   if (window.confirm('Are you sure you want to delete this user?')) {
+  //       deleteTeacher(teacherId).unwrap();
+  //   }
+  // };
 
   const handleEditTeacher = async (teacherId, updatedTeacherData) => {
     const data = await editTeacher({ id: teacherId, data: updatedTeacherData }).unwrap();
@@ -143,9 +142,9 @@ console.log(teachers)
                   ) : (
                     <>
                       <button onClick={() => setEditedTeacherId(user._id)} disabled={userInfo._id === user._id}>Edit</button>
-                      <button onClick={() => handleDeleteTeacher(user._id)} disabled={isDeleting || userInfo._id === user._id}>
+                      {/* <button onClick={() => handleDeleteTeacher(user._id)} disabled={isDeleting || userInfo._id === user._id}>
                         Delete
-                      </button>
+                      </button> */}
                     </>
                   )}
                 </td>

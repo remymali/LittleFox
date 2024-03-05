@@ -15,6 +15,12 @@ export const adminApiSlice = apiSlice.injectEndpoints({
         },
       }),
     }),
+    Students: builder.query({
+      query: () => ({
+        url: `${ADMIN_USERS_URL}/getStudentDtl`,
+        method: 'GET',
+      }),
+    }),
     studRegister: builder.mutation({
       query: (userData) => ({
         url: `${ADMIN_USERS_URL}`,
@@ -54,6 +60,13 @@ export const adminApiSlice = apiSlice.injectEndpoints({
         method: 'GET',
       }),
     }),
+    editTeacher: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `${ADMIN_USERS_URL}/editTeacher/${id}`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
     createTeacher: builder.mutation({
       query: (userData) => ({
         url: `${ADMIN_USERS_URL}/teachRegister`,
@@ -61,19 +74,19 @@ export const adminApiSlice = apiSlice.injectEndpoints({
         body: userData,
       }),
     }),
-    deleteTeacher: builder.mutation({
-      query: (id) => ({
-        url: `${ADMIN_USERS_URL}/${id}`,
-        method: 'DELETE',
-      }),
-    }),
-    editTeacher: builder.mutation({
-      query: ({ id, data }) => ({
-        url: `${ADMIN_USERS_URL}/${id}`,
-        method: 'PUT',
-        body: data,
-      }),
-    }),
+    // deleteTeacher: builder.mutation({
+    //   query: (id) => ({
+    //     url: `${ADMIN_USERS_URL}/${id}`,
+    //     method: 'DELETE',
+    //   }),
+    // }),
+    // editTeacher: builder.mutation({
+    //   query: ({ id, data }) => ({
+    //     url: `${ADMIN_USERS_URL}/${id}`,
+    //     method: 'PUT',
+    //     body: data,
+    //   }),
+    // }),
   }),
 });
 
@@ -87,5 +100,5 @@ export const {
   useGetTeachersQuery,
   useCreateTeacherMutation,
   useEditTeacherMutation,
-  useDeleteTeacherMutation
+  useStudentsQuery
 } = adminApiSlice;

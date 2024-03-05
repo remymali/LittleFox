@@ -15,6 +15,7 @@ app.use('/api/auth-service',proxy('http://localhost:8004'))
 app.use('/api/user-service',proxy('http://localhost:8005'))
 app.use('/api/accademic-service',proxy('http://localhost:8006'))
 app.use('/api/notice-service',proxy('http://localhost:8007'))
+app.use('/api/payment-service',proxy('http://localhost:8008'))
 
 // app.use('/api/auth-service',createProxyMiddleware({target:'http://localhost:8001',changeOrigin:true}))
 // app.use('/api/user-service',createProxyMiddleware({target:'http://localhost:8002',changeOrigin:true}))

@@ -12,6 +12,7 @@ const kafka = new Kafka({
     brokers: ['localhost:29092'],
 });
 
+
 const consumer = kafka.consumer({ groupId: 'user-group' });
 
 const run = async () => {
@@ -32,16 +33,21 @@ const run = async () => {
                     // Parse the message value as JSON
                     const messageData = JSON.parse(message.value.toString());
                     const { sender, title, details, date } = messageData    ;
-                    //console.log("message",message)        
-                    const pushMessage={
-                        data:{
-                          title:title,
-                          body:details
-                        },
-                        token: 'embwT1rCCplUIWRvxrinvp:APA91bGdkDB0zZKTqSJ0Z-ZjAOds9-ZrTtnVtkXx3E6c8CXf1GvFRUftZgKrbXWNPMFoX_nIqbtXfU8IcPHjb2DSHXixsv5MiWNkF3x4fpblrNcLQ6MZPQ3tDV1M0qWUdqVqBKGJ61fD'//'DEVICE_REGISTRATION_TOKEN',
-                      };
-                      const pushResponse = await admin.messaging().send(pushMessage);
-                      console.log('Successfully sent push notification:', pushResponse);
+                    //console.log("message",message)     
+                    try {
+                        const pushMessage={
+                            data:{
+                              title:title,
+                              body:details
+                            },
+                            token: 'embwT1rCCplUIWRvxrinvp:APA91bGS2qgcF8v3un8qEStVi7mbZksjc_uEe_14V9x3hnrAuhx_28wnP0Bea6CiSzJHLmVkEL7oiT88-DarILf339JDTm8PMlhZaHsJYgF_Kzg6mWXu-ar548zmEb1PnP-_bg3BtNAI'//'DEVICE_REGISTRATION_TOKEN',
+                          };
+                          const pushResponse = await admin.messaging().send(pushMessage);
+                          console.log('Successfully sent push notification:', pushResponse);
+                    } catch (error) {
+                        console.log("error",error)
+                    }   
+                    
                     if (topic === 'notice-messages') {
                         // Process the message using the saveNoticeAndSendMessage function
                         await saveMessage(messageData);

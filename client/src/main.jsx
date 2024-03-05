@@ -40,6 +40,9 @@ import ExamScore from './screens/Student/ExamScore.jsx'
 import Notice from './screens/Admin/Notice/addNotice.jsx'
 import ShowNotice from './screens/Admin/Notice/showNotice.jsx'
 import PasswordResetPage from './screens/PasswordResetPage.jsx'
+import FeePayment from './screens/Student/FeePayment.jsx'
+import FeeHistory from './screens/Student/FeeHistory.jsx'
+import Dashboard from './screens/Admin/Dashbord/Dashboard.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -69,6 +72,7 @@ const router = createBrowserRouter(
             <Route path='/Profile' element={<ProfileScreen />} />
              <Route path='/notice' element={<Notice />} /> 
              <Route path='/listNotice' element={<ShowNotice/>}/>
+             <Route path='/dashboard' element={<Dashboard/>}/>
             
       </Route>
 
@@ -85,6 +89,8 @@ const router = createBrowserRouter(
           <Route path='/studAttendance' element={<Attendance/>}/>
           <Route path='/studMarks' element={<ExamScore/>}/>
           <Route path='/studNotice' element={<StudNotice/>}/>
+          <Route path='/studFee' element={<FeePayment/>}/>
+          <Route path='/studFeeHistory' element={<FeeHistory/>}/>
       </Route>
       <Route path='*' element={<NotFoundPage/>}/>
      

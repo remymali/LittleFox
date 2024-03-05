@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useGetExamsQuery } from '../../slices/studentApiSlice'; // Adjust the path as necessary
-import FormContainer from '../../components/FormContainer'; // Import FormContainer from Bootstrap
+import FormContainer from '../../components/formContainer'; // Import FormContainer from Bootstrap
 
 const ExamsScreen = () => {
     const { userInfo } = useSelector((state) => state.auth);

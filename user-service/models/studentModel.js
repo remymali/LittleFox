@@ -14,6 +14,7 @@ const studentSchema = new mongoose.Schema({
   password: { type: String, required: true },
   role: { type: String },
   isBlocked:{type:Boolean,default:false},
+  isPaid:{type:Boolean,default:false},
   class: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'sClass'

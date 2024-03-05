@@ -72,12 +72,12 @@
 }
 /* Define additional classes for enable and disable buttons */
 .users-table button.enabled {
-    background-color: #88ac90; /* Light green */
-    color: #155724; /* Dark text color */
+    background-color: #a3332b; /* Light green */
+    color: #f3f8f5; /* Dark text color */
 }
 
 .users-table button.disabled {
-    background-color: #ea7459; /* Light red */
+    background-color: #5e8e3f; /* Light red */
     color: #721c24; /* Dark text color */
 }
 .search-container {
@@ -97,4 +97,14 @@
     background-size: 20px; /* Adjust the size of the icon */
   }
   
+  
+/* Adjust button styles for different screen sizes */
+@media (max-width: 768px) {
+    .users-table button {
+      padding: 6px 12px;
+      font-size: 12px;
+      display: block; /* Change to block display for smaller screens */
+      margin-bottom: 8px; /* Add margin between buttons for smaller screens */
+    }
+  }
   

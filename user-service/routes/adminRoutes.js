@@ -1,6 +1,6 @@
 import express from 'express';
 import {isAdmin, protect} from '../middleware/authMiddleware.js'
-import {getStudents,studRegister,editStudent,getTeachers,teachRegister,disableStudent,enableStudent} from '../controller/adminController.js'
+import {getStudents,studRegister,editStudent,getTeachers,teachRegister,disableStudent,enableStudent, editTeacher,studentDtl} from '../controller/adminController.js'
 
 import multer from 'multer'
 import uuidv4 from 'uuidv4'
@@ -36,6 +36,8 @@ router.get('/student',protect,isAdmin,getStudents);
 router.post('/register',upload.single('file'),protect,isAdmin,studRegister);
 router.post('/editStudent/:id',upload.single('file'),protect,isAdmin,editStudent)
 router.get('/teacher',protect,isAdmin,getTeachers);
+router.get('/getStudentDtl',protect,isAdmin,studentDtl)
+router.post('/editTeacher/:id',protect,isAdmin,editTeacher);
 router.post('/teachRegister',protect,isAdmin,teachRegister);
 router.put('/disableStudent/:id',protect,isAdmin,disableStudent)
 router.put('/enableStudent/:id',protect,isAdmin,enableStudent)

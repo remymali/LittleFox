@@ -24,7 +24,7 @@ useEffect(()=>{
   generateToken();
   onMessage(messaging,(payload)=>{
     console.log("payload",payload)
-    navigate('/listNotice');
+    // navigate('/listNotice');
   })
  },[navigate])
 const [addNotice,{isLoading}]=useAddNoticeMutation()
@@ -41,8 +41,8 @@ const submitHandler = async (e) => {
   }
   try {
     const noticedtl = { title: title, details: details, date: date, sender: userInfo };
-    const res = await addNotice(noticedtl); // Remove unwrap() here
-    console.log("res", res.payload); // Access the payload directly
+    const res = await addNotice(noticedtl).unwrap(); // Remove unwrap() here
+    console.log("res", res ); // Access the payload directly
     navigate('/listNotice');
   } catch (err) {
     toast.error(err?.data?.message || err.error);

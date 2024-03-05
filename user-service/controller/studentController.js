@@ -53,7 +53,8 @@ const getMarksDtl=asyncHandler(async (req, res) => {
       const messages=student.schoolMessages
       res.status(200).json(messages)
     } catch (error) {
-      
+      console.error('Error:', error);
+    return res.status(500).json({ message: 'Internal server error' });
     }
 
   })
@@ -90,7 +91,24 @@ const getMarksDtl=asyncHandler(async (req, res) => {
       console.error('Error saving message to all students:', error);
     }
   });
-  
-  
+//put/update/ispaid
+const updatePaidFee=asyncHandler(async(req,res)=>{
+try {
+  const{studId}=req.body.studId ;
+  console.log("studId",studId);
+  const studentDtl= await Student.findOne({_id:studId})
+  console.log("studentDtl",studentDtl);
+  if(!studentDtl)
+  {
+    return res.status(404).json({message:"Student not found!"})
+  }
+  studentDtl.isPaid=true
+  await studentDtl.save()
+  return res.status(200).json(studentDtl)
+} catch (error) {
+  console.error('Error:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+}
+})
 
-export { getAttendanceDtl,getMarksDtl,saveMessage,getStudentNotice };
+export { getAttendanceDtl,getMarksDtl,saveMessage,getStudentNotice,updatePaidFee };

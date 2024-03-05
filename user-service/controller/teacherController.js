@@ -5,12 +5,15 @@ import axios from 'axios';
 //get student details
 const getStudents=asyncHandler(async(req,res)=>{
     try {
+      console.log("hai")
         const {id}=req.params
-
+         
         const teacher=await Teacher.find({email:id})
-        
+        console.log("teacher",teacher)
           const classResponse=await axios.get('http://localhost:8006/class/classDtls')
+          console.log("classResponse",classResponse)
           const sclass=classResponse.data
+          
           
             const classWithTeacher=sclass.find((cls)=>cls.teacher.toString()===teacher[0]._id.toString())
             console.log("classWithTeacher",classWithTeacher)

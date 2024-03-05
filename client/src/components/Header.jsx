@@ -38,6 +38,12 @@ const StudentHeader = ({ userInfo, logoutHandler }) => (
     <LinkContainer to='/studNotice'>
           <Nav.Link><FaSignInAlt /> Notice</Nav.Link>
     </LinkContainer>
+    <LinkContainer to='/studFee'>
+          <Nav.Link><FaSignInAlt /> Fee</Nav.Link>
+    </LinkContainer>
+     <LinkContainer to='/studFeeHistory'>
+          <Nav.Link><FaSignInAlt /> FeePaid</Nav.Link>
+    </LinkContainer>
     <NavDropdown title={userInfo.name} id='username'>
       <LinkContainer to='/profile'>
         <NavDropdown.Item>Profile</NavDropdown.Item>
@@ -49,7 +55,7 @@ const StudentHeader = ({ userInfo, logoutHandler }) => (
 
 const AdminHeader = ({ userInfo, logoutHandler }) => (
   <>
-  <LinkContainer to='/admin-dashboard'>
+  <LinkContainer to='/dashboard'>
         <Nav.Link><FaSignInAlt />Admin Dashboard</Nav.Link>
       </LinkContainer>
   <LinkContainer to='/class'>
