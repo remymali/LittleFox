@@ -1,0 +1,12 @@
+.star-icon:hover {
+    color: rgb(237, 224, 111); /* Change to the desired color */
+}
+.star-icon{
+    color: gray;
+    cursor: 'pointer';
+}
+.icon-button{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}

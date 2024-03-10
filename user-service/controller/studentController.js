@@ -1,6 +1,7 @@
 // Backend: Controller
 import asyncHandler from 'express-async-handler';
 import Student from '../models/studentModel.js';
+import Teacher from '../models/teacherModel.js'
 
 
 const getAttendanceDtl = asyncHandler(async (req, res) => {
@@ -111,4 +112,57 @@ try {
 }
 })
 
-export { getAttendanceDtl,getMarksDtl,saveMessage,getStudentNotice,updatePaidFee };
+
+
+//get Teacher details
+const getTeachers=asyncHandler(async(req,res)=>{
+  try {
+      
+      const teachers= await Teacher.find({role:"teacher"});
+      res.status(200).json(teachers)
+  } catch (error) {
+      res.status(400).json({message:error.message})
+  }
+  }) 
+
+const getTeacherById =asyncHandler( async (req, res) => {
+  try {
+    //console.log("hoi")
+     const {id} =req.params
+     console.log("id",id)
+      const teacher = await Teacher.findById(id);
+      //console.log("teacher",teacher)
+      res.status(200).json(teacher);
+  } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+  }
+});
+
+
+// Controller function to handle rating submission
+const addRating = async (req, res) => {
+  try {
+      const { teacherId, rating } = req.body;
+      
+      // Find the teacher in the database
+      const teacher = await Teacher.findById(teacherId);
+      if (!teacher) {
+          return res.status(404).json({ message: 'Teacher not found' });
+      }
+
+      // Update the teacher's rating fields
+      teacher.totalStars += rating;
+      teacher.totalRatings++;
+      teacher.averageRating = teacher.totalStars / teacher.totalRatings;
+
+      // Save the updated teacher document
+      await teacher.save();
+
+      res.status(200).json({ message: 'Rating added successfully' });
+  } catch (error) {
+      console.error('Error:', error);
+      res.status(500).json({ message: 'Internal server error' });
+  }
+};
+export { getAttendanceDtl,getMarksDtl,saveMessage,getStudentNotice,updatePaidFee ,getTeachers,getTeacherById,addRating};

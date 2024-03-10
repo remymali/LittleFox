@@ -22,7 +22,25 @@ export const studentApiSlice = apiSlice.injectEndpoints({
           method: 'GET',
         }),
       }),
-   
+      rateTeachers: builder.query({
+        query: () => ({
+          url: `${Student_USERS_URL}/teacher`,
+          method: 'GET',
+        }),
+      }),
+      rateTeacherDtl: builder.query({
+        query: (id) => ({
+          url: `${Student_USERS_URL}/getTeacherById/${id}`,
+          method: 'GET',
+        }),
+      }),
+      addRating: builder.mutation({
+        query: (data) => ({
+          url: `${Student_USERS_URL}/addRating`,
+          method: 'POST',
+          body: data,
+      }),
+  }),
      
   }),
 });
@@ -30,5 +48,8 @@ export const studentApiSlice = apiSlice.injectEndpoints({
 export const {
   useGetAttendanceQuery,
   useGetExamsQuery,
-  useGetNoticeQuery
+  useGetNoticeQuery,
+  useRateTeachersQuery,
+  useRateTeacherDtlQuery,
+  useAddRatingMutation
 } = studentApiSlice;

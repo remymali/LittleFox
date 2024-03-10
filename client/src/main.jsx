@@ -37,12 +37,18 @@ import Marks_StudentList from './screens/Teacher/Marks_StudentList.jsx'
 import Attendance from './screens/Student/Attendance.jsx'
 import StudNotice from './screens/Student/StudNotice.jsx'
 import ExamScore from './screens/Student/ExamScore.jsx'
+import StudentChat from './screens/Student/StudentChat.jsx'
 import Notice from './screens/Admin/Notice/addNotice.jsx'
 import ShowNotice from './screens/Admin/Notice/showNotice.jsx'
 import PasswordResetPage from './screens/PasswordResetPage.jsx'
 import FeePayment from './screens/Student/FeePayment.jsx'
 import FeeHistory from './screens/Student/FeeHistory.jsx'
+import TeacherRating from './screens/Student/TeacherRating.jsx'
 import Dashboard from './screens/Admin/Dashbord/Dashboard.jsx'
+import Chat from './screens/Teacher/chat.jsx'
+import StarRating from './components/StarRating.jsx'
+import StudentVideoChat from './screens/Student/StudentVideoChat.jsx'
+import Room from './screens/Room.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -82,6 +88,9 @@ const router = createBrowserRouter(
           <Route path='/attendance' element={<AddAttendance/>}/>
           <Route path='/exam/:userId'  element={<AddMarks/>}/>
           <Route path='/MarkStudentList' element={<Marks_StudentList/>}/>
+          <Route path='/chat' element={<Chat/>}/>
+          <Route path='/videoChat' element={<StudentVideoChat/>}/>
+          <Route path='/room/:roomID' element={<Room/>}/>
       </Route>
 
        {/* Student details */}
@@ -91,6 +100,10 @@ const router = createBrowserRouter(
           <Route path='/studNotice' element={<StudNotice/>}/>
           <Route path='/studFee' element={<FeePayment/>}/>
           <Route path='/studFeeHistory' element={<FeeHistory/>}/>
+          <Route path='/studChat' element={<StudentChat/>}/>
+          <Route path='/teachRating' element={<TeacherRating/>}/>
+          <Route path='/starRating' element={<StarRating/>}/>
+          
       </Route>
       <Route path='*' element={<NotFoundPage/>}/>
      

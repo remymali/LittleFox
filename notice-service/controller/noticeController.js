@@ -83,4 +83,8 @@ const editNotice = asyncHandler(async (req, res) => {
 });
 
 
+
+const allStudents=asyncHandler(async(req,res)=>{
+
+})
 export { getNotice, addNotice ,editNotice}

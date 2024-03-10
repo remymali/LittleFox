@@ -14,6 +14,9 @@ const teacherSchema = new mongoose.Schema({
     college: { type: String},
     yearCompleted: { type: Number},
   }],
+  averageRating: { type: Number, default: 0 },
+  totalStars: { type: Number, default: 0 },
+  totalRatings: { type: Number, default: 0 },
 });
 
 teacherSchema.pre('save', async function (next) {

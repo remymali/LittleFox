@@ -63,9 +63,9 @@ console.log(teachers)
       <table className="Teachers-table">
         <thead>
           <tr>
-            <th>ID</th>
             <th>Name</th>
             <th>Email</th>
+            <th>Rating</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -88,9 +88,9 @@ console.log(teachers)
     <table className="Teachers-table">
       <thead>
         <tr>
-          <th>ID</th>
           <th>Name</th>
           <th>Email</th>
+          <th>Rating</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -108,7 +108,7 @@ console.log(teachers)
           <tbody>
             {currentTeachers && currentTeachers?.map((user) => (
               <tr key={user._id}>
-                <td><pre>{user._id}</pre></td>
+                
                 <td>
                   {editedTeacherId === user._id ? (
                     <input
@@ -131,6 +131,15 @@ console.log(teachers)
                     user.email
                   )}
                 </td>
+                <td> {editedTeacherId === user._id ? (
+                    <input
+                      type="text"
+                      
+                      onChange={(e) => setEditedTeacherData({ ...editedTeacherData, email: e.target.value })}
+                    />
+                  ) : (
+                    user.averageRating
+                  )}</td>
                 <td>
                   {editedTeacherId === user._id ? (
                     <button

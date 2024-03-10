@@ -5,7 +5,6 @@ import axios from 'axios';
 //get student details
 const getStudents=asyncHandler(async(req,res)=>{
     try {
-      console.log("hai")
         const {id}=req.params
          
         const teacher=await Teacher.find({email:id})

@@ -16,7 +16,7 @@ const AddClass = () => {
   const [teacher, setTeacher] = useState('');
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
 
   const { userInfo } = useSelector((state) => state.auth);
   const {data:teachers,isLoading:teachersLoading} =useGetTeachersQuery();

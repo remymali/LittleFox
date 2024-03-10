@@ -90,7 +90,7 @@ const editStudent = asyncHandler(async (req, res) => {
         const { id } = req.params;
         const email = req.body.email;
         const name = req.body.name;  
-        console.log("length",name.length)
+        //console.log("length",name.length)
         // Check if a student with the given ID exists
         const studentExist = await Student.findOne({ _id: id });
         if (!studentExist) {
@@ -131,6 +131,7 @@ const editStudent = asyncHandler(async (req, res) => {
 //get Teacher details
 const getTeachers=asyncHandler(async(req,res)=>{
     try {
+        console.log("hai")
         const teachers= await Teacher.find({role:"teacher"});
         res.status(200).json(teachers)
     } catch (error) {
@@ -147,7 +148,7 @@ const editTeacher = asyncHandler(async (req, res) => {
         const { id } = req.params;
         const email = req.body.email;
         const name = req.body.name;  
-        console.log("req.body.email",req.body.email)
+        //console.log("req.body.email",req.body.email)
         // Check if a student with the given ID exists
         const teacherExist = await Teacher.findOne({ _id: id });
         if (!teacherExist) {

@@ -9,7 +9,7 @@ import sendOtpEmail from '../utils/sendOtpEmail.js'
 //verifyOTP
 const verifyOTP = asyncHandler(async (req, res) => {
     const { email, otp } = req.body
-    console.log(req.body)
+   // console.log(req.body)
 
     if (!otp) {
         res.status(400).json({ message: "OTP is required" })
@@ -19,7 +19,7 @@ const verifyOTP = asyncHandler(async (req, res) => {
         res.status(400).json({ message: "User not found with the provided email" });
         return; // Add a return statement to stop execution
     }
-    console.log(user)
+    //console.log(user)
     if(otp!=user.otp)
     {
         res.status(400).json({ message: "OTP verification failed:" })
@@ -43,7 +43,7 @@ const verifyOTP = asyncHandler(async (req, res) => {
 //@des  Auth user/Forgotpassword
 //route POST  post/api/users/Forgotpassword
 const forgotPassword = asyncHandler(async (req, res) => {
-    try { console.log("req.bodyforgot",req.body);
+    try { //console.log("req.bodyforgot",req.body);
         const user = await User.findOne({ email: req.body.email });
 
         if (user) {
@@ -84,13 +84,13 @@ const resetPassword=asyncHandler(async(req,res)=>{
 
 
 const googleLogin=asyncHandler(async(req,res)=>{
-    console.log("req",req.body)
+   // console.log("req",req.body)
     const {email,name}=req.body
     const user = await User.findOne({ email });
-    console.log("user.isBlocked", user.isBlocked);
+   // console.log("user.isBlocked", user.isBlocked);
     
     if (user.isBlocked) {
-        console.log("jshjhsj");
+        //console.log("jshjhsj");
         res.status(401).json({ message: "User is blocked" });
     } else {if (user) {
         generateToken(res, user._id, user.role, user.email);
@@ -119,12 +119,12 @@ const googleLogin=asyncHandler(async(req,res)=>{
 //@access Public
 const authUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
-    console.log("req.body>>", req.body);
+   // console.log("req.body>>", req.body);
     const user = await User.findOne({ email });
-    console.log("user.isBlocked", user.isBlocked);
+    //console.log("user.isBlocked", user.isBlocked);
     
     if (user.isBlocked) {
-        console.log("jshjhsj");
+        //console.log("jshjhsj");
         res.status(401).json({ message: "User is blocked" });
     } else {
         if (user && (await user.matchPassword(password))) {
@@ -190,7 +190,7 @@ const registerUser = asyncHandler(async (req, res) => {
 //route POST  post/api/users/logout
 //@access Public
 const logoutUser = asyncHandler(async (req, res) => {
-    console.log("outout")
+    //console.log("outout")
     res.cookie('jwt', '', {
         httpOnly: true,
         expires: new Date(0)
