@@ -30,7 +30,7 @@ import Admin_Class from './screens/Admin/classRelated/Admin_Class.jsx'
 import AddClass from './screens/Admin/classRelated/AddClass.jsx'
 import Admin_Subject  from './screens/Admin/subjectRelated/Admin_Subject.jsx'
 import AddSubject from './screens/Admin/subjectRelated/AddSubject.jsx'
-import StudentList from './screens/Teacher/studentList.jsx'
+import StudentList from './screens/Teacher/StudentList.jsx'
 import AddAttendance from './screens/Teacher/AddAttendance.jsx'
 import AddMarks from './screens/Teacher/AddMarks.jsx'
 import Marks_StudentList from './screens/Teacher/Marks_StudentList.jsx'
@@ -45,10 +45,12 @@ import FeePayment from './screens/Student/FeePayment.jsx'
 import FeeHistory from './screens/Student/FeeHistory.jsx'
 import TeacherRating from './screens/Student/TeacherRating.jsx'
 import Dashboard from './screens/Admin/Dashbord/Dashboard.jsx'
-import Chat from './screens/Teacher/chat.jsx'
+import Chat from './screens/Teacher/Chat.jsx'
 import StarRating from './components/StarRating.jsx'
 import StudentVideoChat from './screens/Student/StudentVideoChat.jsx'
 import Room from './screens/Room.jsx'
+import ChatRoom from './screens/Teacher/ChatRoom.jsx'
+import TeacherVideoChat from './screens/Teacher/TeacherVideoChat.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -68,17 +70,17 @@ const router = createBrowserRouter(
       <Route path=''  element={<AuthorizedRoute allowedRoles={['admin']} />}>
             <Route path='/register' element={<RegisterScreen/>} />
             <Route path='/studRegister' element={<Admin_StudRegistration/>}/>
-            <Route path='/student' element={<Admin_Student /> } /> 
+            <Route path='/admin/student' element={<Admin_Student /> } /> 
             <Route path='/teachRegister' element={< Admin_TeachRegister/>}/>     
-            <Route path='/teacher' element={<Admin_Teacher/>}/>
-            <Route path='/class' element={<Admin_Class/>}/>
-            <Route path='/subject' element={<Admin_Subject/>}/>
+            <Route path='/admin/teacher' element={<Admin_Teacher/>}/>
+            <Route path='/admin/class' element={<Admin_Class/>}/>
+            <Route path='/admin/subject' element={<Admin_Subject/>}/>
             <Route path='/addSubject' element={<AddSubject/>}/>
             <Route path='/addClass' element={<AddClass/>}/>
-            <Route path='/Profile' element={<ProfileScreen />} />
+            <Route path='/admin/Profile' element={<ProfileScreen />} />
              <Route path='/notice' element={<Notice />} /> 
-             <Route path='/listNotice' element={<ShowNotice/>}/>
-             <Route path='/dashboard' element={<Dashboard/>}/>
+             <Route path='/admin/listNotice' element={<ShowNotice/>}/>
+             <Route path='/admin/dashboard' element={<Dashboard/>}/>
             
       </Route>
 
@@ -89,8 +91,8 @@ const router = createBrowserRouter(
           <Route path='/exam/:userId'  element={<AddMarks/>}/>
           <Route path='/MarkStudentList' element={<Marks_StudentList/>}/>
           <Route path='/chat' element={<Chat/>}/>
-          <Route path='/videoChat' element={<StudentVideoChat/>}/>
-          <Route path='/room/:roomID' element={<Room/>}/>
+          <Route path='/videoChat' element={<TeacherVideoChat/>}/>
+          <Route path='/chatRoom/:roomID' element={<ChatRoom/>}/>
       </Route>
 
        {/* Student details */}
@@ -103,6 +105,8 @@ const router = createBrowserRouter(
           <Route path='/studChat' element={<StudentChat/>}/>
           <Route path='/teachRating' element={<TeacherRating/>}/>
           <Route path='/starRating' element={<StarRating/>}/>
+          <Route path='/studentVideoChat' element={<StudentVideoChat/>}/>
+          <Route path='/room/:roomID' element={<Room/>}/>
           
       </Route>
       <Route path='*' element={<NotFoundPage/>}/>

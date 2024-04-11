@@ -56,9 +56,10 @@ io.on('connection', (socket) => {
     console.log('a user connected', socket.id);
     users.add(socket.id)
     io.emit('userCount',users.size);
-    socket.on('chat-message', (msg) => {
-        console.log('from:',socket.id+'  message:', msg);
-        io.emit('chat-message', msg);
+    socket.on('chat-message', (data) => {
+        const {msg,userInfo}=data
+        console.log('from:',socket.id+'  message:', msg+' userInfo:',userInfo);
+        io.emit('chat-message', { msg: msg, sender: userInfo, receiver: null });
     });
 
     socket.on('disconnect', () => {

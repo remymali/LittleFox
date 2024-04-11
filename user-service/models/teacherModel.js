@@ -17,6 +17,7 @@ const teacherSchema = new mongoose.Schema({
   averageRating: { type: Number, default: 0 },
   totalStars: { type: Number, default: 0 },
   totalRatings: { type: Number, default: 0 },
+  reviewComment: { type: String },
 });
 
 teacherSchema.pre('save', async function (next) {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Container } from 'react-bootstrap';
 import FormContainer from '../components/formContainer.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { useVerifyOTPMutation } from '../slices/authApiSlice.js';
@@ -95,11 +95,12 @@ const OtpVerification = () => {
   };
 
   return (
-    <div className='p-5' style={{minHeight: '100vh', backgroundColor: 'rgba(56, 46, 126, 0.8)', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1), 0 0 20px rgba(0, 0, 0, 0.3)', borderRadius: '10px' }}>
-      <FormContainer>
-        <h1>Enter OTP:</h1>
+    
+    <Container className="d-flex flex-column align-items-center justify-content-center "> 
+    <FormContainer className="w-50"> 
+      <h1>Enter OTP:</h1>
         {isTimerVisible &&
-        <p className='otpTimer'>OTP Timer: {otpTimer} seconds</p>
+        <p className='otpTimer p-5'>OTP Timer: {otpTimer} seconds</p>
         }
         <Form onSubmit={handleVerifyOTP}>
           <Form.Group className='my-2' controlId='password'>
@@ -128,9 +129,8 @@ const OtpVerification = () => {
           {!isTimerVisible &&
             <Button            
             variant='secondary'
-            className='mt-3 p'
+            className='m-5 p-2'
             onClick={ handleResendOTP}
-            style={{ paddingLeft: '20px' }}
           >
             Resend OTP
           </Button>
@@ -141,7 +141,8 @@ const OtpVerification = () => {
 
         {/* Additional UI elements if needed */}
       </FormContainer>
-    </div>
+      </Container>
+    
   );
 };
 

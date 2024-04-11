@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
 import { useGetStudentsQuery} from '../../slices/teacherApiSlice.js';
-import '../../components/UsersTable.css';
+import './StudentList.css';
 import { useSelector } from 'react-redux';
 
 const UserTable = () => {
@@ -30,7 +30,8 @@ const UserTable = () => {
 
   if (isLoading || error) {
     return (
-      <table className="users-table">
+      
+      <table className="Teachers-table">
         <thead>
           <tr>
            
@@ -46,7 +47,8 @@ const UserTable = () => {
   }
 
   return (
-    <table className="users-table">
+    <div> 
+    <table className="Teachers-table">
       <thead>
         <tr>
           
@@ -111,6 +113,7 @@ const UserTable = () => {
         )
       }
     </table>
+    </div>
   );
 };
 

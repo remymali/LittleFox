@@ -114,7 +114,7 @@ const UserTable = ({ selectedClass, page, limit }) => {
       <table className="users-table">
         <thead>
           <tr>
-            <th>ID</th>
+           
             <th>Name</th>
             <th>Email</th>
             <th>Actions</th>
@@ -127,13 +127,13 @@ const UserTable = ({ selectedClass, page, limit }) => {
 
   return (
     <div>
-      <div className='Search-Container'>
+      <div className='Search-Container p-2'>
         <input type='text' value={searchQuery} onChange={handleSearchChange} placeholder='Search' className='search-input' />
       </div>
       <table className="users-table">
         <thead>
           <tr>
-            <th>ID</th>
+            
             <th>Name</th>
             <th>Email</th>
             <th>Photo</th>
@@ -156,7 +156,7 @@ const UserTable = ({ selectedClass, page, limit }) => {
               {/* {Array.isArray(users) && users.map((user) => ( */}
               {Array.isArray(currentUsers) && currentUsers.map((user) => (
                 <tr key={user._id}>
-                  <td><pre>{user._id}</pre></td>
+                  
                   <td>
                     {editedUserId === user._id ? (
                       <input

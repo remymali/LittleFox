@@ -76,10 +76,10 @@ const  Dashboard=()=> {
      
 
   return (
-    <FormContainer>
+    <div>
         <Form>
         <div className='main-title'>
-            <h3>DASHBOARD</h3>
+           
         </div>
 
         <div className='main-cards'>
@@ -153,7 +153,7 @@ const  Dashboard=()=> {
 
         </div>
         </Form>
-    </FormContainer>
+    </div>
   )
 }
 

@@ -143,7 +143,7 @@ const getTeacherById =asyncHandler( async (req, res) => {
 // Controller function to handle rating submission
 const addRating = async (req, res) => {
   try {
-      const { teacherId, rating } = req.body;
+      const { teacherId, rating ,comment } = req.body;
       
       // Find the teacher in the database
       const teacher = await Teacher.findById(teacherId);
@@ -155,7 +155,7 @@ const addRating = async (req, res) => {
       teacher.totalStars += rating;
       teacher.totalRatings++;
       teacher.averageRating = teacher.totalStars / teacher.totalRatings;
-
+      teacher.reviewComment=comment
       // Save the updated teacher document
       await teacher.save();
 

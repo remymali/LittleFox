@@ -4,7 +4,7 @@
     margin: 15px 0; /* Reduce top margin */
     font-size: 0.9em;
     font-family: sans-serif;
-    width: min(90%, 70.5rem);
+    width: 80vw; 
     background-color: white;
     margin-inline: auto;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
@@ -75,8 +75,8 @@
 @media screen and (max-width: 768px) {
     .Teachers-table {
         font-size: 0.8em;
-        width: min(100%, 100%); /* Adjust width for mobile */
-        margin: 10px 0; /* Reduce top margin further for mobile */
+        width: min(100%, 100%); 
+        margin: 10px 0; 
     }
 
     .Teachers-table th,

@@ -69,7 +69,7 @@ const NoticeTable = () => {
                 placeholder="Search by title or details..."
             />
     </div>
-            <table className="users-table">
+            <table className="Teachers-table">
                 <thead>
                     <tr>
                         <th>Title</th>

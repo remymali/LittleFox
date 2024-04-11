@@ -22,7 +22,7 @@ app.use(cookieParser());
 app.use((req, res, next) => {
     const signature = req.cookies.jwt;
     console.log(signature);
-    console.log(`inside userservice${req.method} ${req.url}`);
+    console.log(`inside accadservice${req.method} ${req.url}`);
     next();
 });
 app.use('/class',classRoutes)

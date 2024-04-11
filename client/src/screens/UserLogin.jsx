@@ -80,11 +80,14 @@ const UserLogin = () => {
       const res = await forget({ email }).unwrap();
       console.log('resuser>>', res.key);
       const key = res.key;
+      
       // Check response and handle accordingly
       if (res.message === 'OTP sent successfully') {
         console.log('OTP sent successfully');
         navigate('/OtpVerification', { state: { email, key } });
-      } else {
+      } 
+      
+      else {
         // Handle other response messages if needed
         console.error('Forgot password failed:', res.message);
         toast.error('Forgot password failed: ' + res.message);
@@ -140,11 +143,13 @@ const handleGoogleLogin = async (credentialResponse) => {
       const res = await login({ email, password }).unwrap();
       console.log('res>>', res);
       dispatch(setCredentials({ ...res }));
+      toast.success(`OTP number: ${res.OTP}`);
+
       if (res.message === 'OTP sent successfully') {
         console.log('OTP sent successfully');
         navigate('/OtpVerification', { state: { email } });
       }
-
+      
     } catch (error) {
       console.error('Login error:', error);
       if (error.status === 401 && error.data.message === 'User is blocked') {
@@ -155,18 +160,21 @@ const handleGoogleLogin = async (credentialResponse) => {
         console.log('Invalid email or password');
         toast.error('Invalid email or password');
       }
+      if (error.status === 500 && error.data.message === 'User not registered') {
+        toast.error('User not registered')
+      }
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className='p-5' style={{ minHeight: '100vh', backgroundColor: 'rgba(56, 46, 126, 0.8)', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1), 0 0 20px rgba(0, 0, 0, 0.3)', borderRadius: '10px' }}>
+    
       <FormContainer>
         <h1 className='text-center'>Login</h1>
 
         <Form onSubmit={handleLogin}>
-          <Form.Group className='my-2' controlId='email'>
+          <Form.Group className='my-5' controlId='email'>
             <Form.Label>Email Address</Form.Label>
             <Form.Control
               type='email'
@@ -183,7 +191,7 @@ const handleGoogleLogin = async (credentialResponse) => {
             </Form.Control.Feedback>
           </Form.Group>
 
-          <Form.Group className='my-2' controlId='password'>
+          <Form.Group className='my-5' controlId='password'>
             <Form.Label>Password</Form.Label>
             <Form.Control
               type='password'
@@ -202,10 +210,11 @@ const handleGoogleLogin = async (credentialResponse) => {
 
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'left' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <Button disabled={isLoading} type='submit' className='mt-3 btn btn-primary btn-sm'>
+              <Button disabled={isLoading} type='submit' className='ms-auto btn btn-primary btn-sm'>
                 Send OTP
               </Button>
-              <Link className='forgot-password-link' onClick={handleForgotPassword}>
+              <Link className='forgot-password-link' onClick={handleForgotPassword}style={{ marginLeft:'25px',fontSize:'10px',color: '#ffffff'
+ }}>
                 Forgot Password?
               </Link>
               {/* <Button disabled={isLoading} type='submit' className='mt-3 btn btn-primary btn-sm'>
@@ -215,7 +224,7 @@ const handleGoogleLogin = async (credentialResponse) => {
 
 
             <hr style={{ width: '100%', margin: '10px 0' }} />
-            <div style={{ padding: '0' }}>
+            <div  style={{ padding: '0' }}>
               <GoogleLogin
                 onSuccess={handleGoogleLogin}
                 onError={() => {
@@ -233,8 +242,10 @@ const handleGoogleLogin = async (credentialResponse) => {
         </Form>
         {isLoading && <Loader />}
       </FormContainer>
-    </div>
+ 
   );
 };
+  
+
 
 export default UserLogin;

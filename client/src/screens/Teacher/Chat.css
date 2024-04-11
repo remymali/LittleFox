@@ -1,32 +1,79 @@
-body { margin: 0; padding-bottom: 3rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-
-      #form { background: rgba(0, 0, 0, 0.15); padding: 0.25rem; position: fixed; bottom: 0; left: 0; right: 0; display: flex; height: 3rem; box-sizing: border-box; backdrop-filter: blur(10px); }
-      #input { border: none; padding: 0 1rem; flex-grow: 1; border-radius: 2rem; margin: 0.25rem; }
-      #input:focus { outline: none; }
-      #form > button { background: #333; border: none; padding: 0 1rem; margin: 0.25rem; border-radius: 3px; outline: none; color: #fff; }
-
-      .message-container { list-style-type: none; margin: 0; padding: 0; }
-      .message-container > li { padding: 0.5rem 1rem; }
-      .message-container > li:nth-child(odd) { background: #efefef; }
-     /* Chat.css */
-.message-container {
-    padding: 8px 16px;
-    margin-bottom: 8px;
-    border-radius: 8px;
+/* Ensure messages container has a fixed height and is scrollable */
+#messages {
+    overflow-y: auto; 
+    max-height: calc(100vh - 6rem); 
+    display: flex; 
+    flex-direction: column;
 }
 
+/* Adjust form container styling */
+#form {
+    background: rgba(0, 0, 0, 0.15);
+    padding: 0.25rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    height: 3rem;
+    box-sizing: border-box;
+    backdrop-filter: blur(10px);
+    z-index: 1; /* Ensure form stays on top of messages */
+}
+
+/* Adjust input field styling */
+#input {
+    border: none;
+    padding: 0 1rem;
+    flex-grow: 1;
+    border-radius: 2rem;
+    margin: 0.25rem;
+    background-color: #fff; /* Set background color of input field */
+    color: #101010; /* Set text color of input field */
+}
+
+#input:focus {
+    outline: none;
+}
+
+/* Adjust send button styling */
+#form > button {
+    background: #333;
+    border: none;
+    padding: 0 1rem;
+    margin: 0.25rem;
+    border-radius: 3px;
+    outline: none;
+    color: #fff;
+}
+
+/* Optional: Adjust message container styling */
+.message-container {
+    margin-bottom: 8px;
+    border-radius: 8px;
+    color: #101010;
+   letter-spacing:0 ;
+    word-wrap: break-word; /* Ensure long messages wrap within container */
+}
+
+/* Rest of your CSS styles remain the same */
+
 .sent-message {
-    background-color: #e6e6e6; /* Background color for messages sent by the current user */
-    align-self: flex-end;
+    background-color: #d5a0a0; /* Background color for messages sent by the current user */
+    align-self: flex-end; 
+    padding-left: 30px;
 }
 
 .received-message {
-    background-color: #ffffff; /* Background color for messages received from other users */
-    align-self: flex-start;
+    background-color: #5be769; /* Background color for messages received from other users */
+    align-self: flex-start; 
+    padding-left: 30px;
+    margin: 20px;
 }
 
 .video-icon{
     background-color: transparent;
     border: none;
     cursor: pointer;
+    color: #fff;
 }

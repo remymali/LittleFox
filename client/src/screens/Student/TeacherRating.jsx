@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import '../Student/TeacherRating.css';
+import '../../components/UsersTable.css'
 
 const TeacherRating = () => {
     const { userInfo } = useSelector((state) => state.auth);
@@ -29,6 +30,10 @@ const TeacherRating = () => {
     return (
         <FormContainer>
             <h1 className='text-center'>Teachers</h1>
+            <div style={{display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '40vh'}}>
             <table className='users-table'>
                 <thead>
                     <tr>
@@ -51,6 +56,7 @@ const TeacherRating = () => {
                     ))}
                 </tbody>
             </table>
+            </div>
         </FormContainer>
     );
 };

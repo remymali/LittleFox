@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useGetStudentsQuery } from '../../slices/teacherApiSlice.js';
-import '../../components/UsersTable.css';
+import './StudentList.css';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -26,7 +26,7 @@ const UserTable = () => {
 
   if (isLoading || error) {
     return (
-      <table className="users-table">
+      <table className="Teachers-table">
         <thead>
           <tr>
             <th>Name</th>
@@ -40,7 +40,7 @@ const UserTable = () => {
   }
 
   return (
-    <table className="users-table">
+    <table className="Teachers-table">
       <thead>
         <tr>
           <th>Name</th>

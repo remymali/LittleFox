@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 import cors from 'cors';
 import bodyParser from 'body-parser'
 import cookieParser from "cookie-parser";
-import { run } from './Kafka/noticeConsumer.js'
+//import { run } from './Kafka/noticeConsumer.js'
 dotenv.config()
 import {notFound,errorHandler} from './middleware/errorMiddleware.js'
 import connectDB from "./config/db.js";

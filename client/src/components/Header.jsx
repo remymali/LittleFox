@@ -64,26 +64,26 @@ const StudentHeader = ({ userInfo, logoutHandler }) => (
 
 const AdminHeader = ({ userInfo, logoutHandler }) => (
   <>
-  <LinkContainer to='/dashboard'>
+  <LinkContainer to='/admin/dashboard'>
         <Nav.Link><FaSignInAlt />Admin Dashboard</Nav.Link>
       </LinkContainer>
-  <LinkContainer to='/class'>
+  <LinkContainer to='/admin/class'>
         <Nav.Link><FaSignInAlt /> Class</Nav.Link>
   </LinkContainer>
-  <LinkContainer to='/subject'>
+  <LinkContainer to='/admin/subject'>
         <Nav.Link><FaSignInAlt /> Subject</Nav.Link>
   </LinkContainer>
-  <LinkContainer to='/student'>
+  <LinkContainer to='/admin/student'>
         <Nav.Link><FaSignInAlt /> Student</Nav.Link>
   </LinkContainer>
-  <LinkContainer to='/listNotice'>
+  <LinkContainer to='/admin/listNotice'>
         <Nav.Link><FaSignInAlt /> Notice</Nav.Link>
   </LinkContainer>
-  <LinkContainer to='/teacher'>
+  <LinkContainer to='/admin/teacher'>
         <Nav.Link><FaSignInAlt /> Teacher</Nav.Link>
   </LinkContainer>
     <NavDropdown title={userInfo.name} id='username'>      
-      <LinkContainer to='/profile'>
+      <LinkContainer to='/admin/profile'>
         <NavDropdown.Item>Profile</NavDropdown.Item>
       </LinkContainer>
       <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>

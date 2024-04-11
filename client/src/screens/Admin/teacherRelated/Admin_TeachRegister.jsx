@@ -40,7 +40,7 @@ const Admin_TeachRegister = () => {
       const res = await createTeacher({ name, email, password }).unwrap();
       //dispatch(setCredentials({ ...res }));
       // Redirect to a different route after successful registration
-      navigate('/teacher');
+      navigate('/admin/teacher');
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }

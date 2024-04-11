@@ -43,7 +43,7 @@ const Admin_Student = () => {
             Add
           </Button>
         </div>
-        <Col>
+        <Col className='p-2'>
           <UsersTable selectedClass={selectedClass} data={classes}/>
         </Col>
         

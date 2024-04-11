@@ -47,7 +47,7 @@ const AddSubject = () => {
         console.log("teacher",teacher)
         const classdtl={name:name,subCode:subCode,teacher:teacher}
       const res = await addSubject(classdtl).unwrap();
-      navigate('/subject');
+      navigate('/admin/subject');
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }

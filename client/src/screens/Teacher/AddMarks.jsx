@@ -1,3 +1,4 @@
+// AddMarksScreen.jsx
 import React, { useEffect, useState } from 'react';
 import { useGetSubjectQuery } from '../../slices/subjectApiSlice.js';
 import { useAddMarksMutation } from '../../slices/teacherApiSlice.js';
@@ -5,6 +6,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Form, Button, FormGroup, FormControl } from 'react-bootstrap';
 import FormContainer from '../../components/formContainer.jsx';
+import './AddMarksScreen.css'; // Import your custom CSS file for responsive styling
+
 
 const AddMarksScreen = () => {
     const { userId } = useParams();
@@ -61,7 +64,7 @@ const AddMarksScreen = () => {
     };
 
     return (
-        <FormContainer>
+        <FormContainer >
             <h2>Add Marks</h2>
             <Form onSubmit={submitHandler}>
                 <FormGroup className='my-2' controlId='examName'>
@@ -86,7 +89,7 @@ const AddMarksScreen = () => {
                         </FormGroup>
                     ))
                 )}
-                <Button type='submit' variant='primary' className='mt-3' disabled={isLoading}>Add Marks</Button>
+                <Button type='submit' variant='primary' className='mt-1' disabled={isLoading}>Add Marks</Button>
             </Form>
         </FormContainer>
     );

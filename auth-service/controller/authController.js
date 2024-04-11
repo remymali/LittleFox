@@ -9,7 +9,7 @@ import sendOtpEmail from '../utils/sendOtpEmail.js'
 //verifyOTP
 const verifyOTP = asyncHandler(async (req, res) => {
     const { email, otp } = req.body
-   // console.log(req.body)
+   //console.log(req.body)
 
     if (!otp) {
         res.status(400).json({ message: "OTP is required" })
@@ -84,7 +84,7 @@ const resetPassword=asyncHandler(async(req,res)=>{
 
 
 const googleLogin=asyncHandler(async(req,res)=>{
-   // console.log("req",req.body)
+      //console.log("req",req.body)
     const {email,name}=req.body
     const user = await User.findOne({ email });
    // console.log("user.isBlocked", user.isBlocked);
@@ -94,22 +94,13 @@ const googleLogin=asyncHandler(async(req,res)=>{
         res.status(401).json({ message: "User is blocked" });
     } else {if (user) {
         generateToken(res, user._id, user.role, user.email);
-
-        // let otp = otpGenerator.generate(6, {
-        //     upperCaseAlphabets: false,
-        //     lowerCaseAlphabets: false,
-        //     specialChars: false,
-        // });
-        // console.log("OTP>>", otp);
-        // user.otp = otp;
-        // await user.save();
-        // Send OTP via email
-        // sendOtpEmail(email, otp);
         res.status(201).json({ message: 'Success',userDtls:user });
     } else {
         res.status(401).json({ message: "Invalid email or password" });
         throw new Error("Invalid email or password");
     }
+    res.status(500)
+    throw new Error("Invalid user")
 }
 });
 
@@ -119,10 +110,15 @@ const googleLogin=asyncHandler(async(req,res)=>{
 //@access Public
 const authUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
-   // console.log("req.body>>", req.body);
+   console.log("req.body",res.status);
     const user = await User.findOne({ email });
-    //console.log("user.isBlocked", user.isBlocked);
-    
+    console.log("user.isBlocked");
+    if(!user)
+    {
+    res.status(500).json({message:'User not registered'})
+    throw new Error('User not registered')
+    //return res.status(500).json({message:'User not registered'})
+    }
     if (user.isBlocked) {
         //console.log("jshjhsj");
         res.status(401).json({ message: "User is blocked" });
@@ -140,7 +136,7 @@ const authUser = asyncHandler(async (req, res) => {
             await user.save();
             // Send OTP via email
             sendOtpEmail(email, otp);
-            res.status(201).json({ message: 'OTP sent successfully' });
+            res.status(201).json({ message: 'OTP sent successfully',OTP:otp });
         } else {
             res.status(401).json({ message: "Invalid email or password" });
             throw new Error("Invalid email or password");

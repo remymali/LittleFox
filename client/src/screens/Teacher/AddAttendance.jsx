@@ -5,6 +5,7 @@ import FormContainer from '../../components/formContainer.jsx';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import '../../components/Table.css'
 
 const AddAttendance = () => {
     const { userInfo } = useSelector((state) => state.auth);
@@ -61,7 +62,7 @@ const AddAttendance = () => {
     return (
         <FormContainer>
             <h2>Add Attendance</h2>
-            <Form onSubmit={submitHandler}>
+            <Form onSubmit={submitHandler} className='p-5'>
                 <FormGroup className='my-2' controlId='date'>
                     <Form.Label>Date:</Form.Label>
                     <FormControl type="date" value={selectedDate} onChange={e => setSelectedDate(e.target.value)} />

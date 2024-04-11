@@ -18,6 +18,13 @@ const StarRating = () => {
     const [rating, setRating] = useState(0);
     const [addRating, isLoadingAddRating] = useAddRatingMutation();
 
+
+    const [comment, setComment] = useState('');
+
+    const handleCommentChange = (e) => {
+        setComment(e.target.value);
+    };
+
     const handleStarClick = (value) => {
         setRating(value);
     };
@@ -25,9 +32,11 @@ const StarRating = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await addRating({ teacherId: id, rating }).unwrap();
+            const res = await addRating({ teacherId: id, rating,comment }).unwrap();
             console.log("res.message", res.message);
             toast.success('Rating added successfully.');
+            setComment('');
+            setRating(0);
         } catch (error) {
             toast.error('Internal Server Error.');
         }
@@ -45,9 +54,14 @@ const StarRating = () => {
     }
 
     return (
-        <FormContainer className="card text-center" style={{ width: '400px' }}>
-            <h2 className='text-center'>Rate Teacher</h2>
+        <FormContainer>
+          
+            <h2 className='text-center p-5'>Rate Teacher</h2>
             <hr/>
+            <div style={{display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '30vh'}}>
             {teacher && (
                 <div className="card-body text center">
                     <Form onSubmit={handleSubmit}>
@@ -75,11 +89,21 @@ const StarRating = () => {
                                 </span>
                             ))}
                         </div>
+                        <Form.Group controlId="comment">
+                                <Form.Label>Add a comment:</Form.Label>
+                                <Form.Control
+                                    as="textarea"
+                                    rows={3}
+                                    value={comment}
+                                    onChange={handleCommentChange}
+                                />
+                            </Form.Group>
                         <hr/>
                         <button type="submit" className="btn btn-primary">Add Rating</button>
                     </Form>
                 </div>
             )}
+            </div>
         </FormContainer>
     );
 };

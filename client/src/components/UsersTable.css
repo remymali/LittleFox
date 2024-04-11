@@ -1,31 +1,27 @@
 .users-table {
     border-collapse: collapse;
-    margin: 25px 0;
     font-size: 0.9em;
     font-family: sans-serif;
     width: min(90%, 70.5rem);
     margin-inline: auto;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 20px #00000026;
     text-align: center;
+    overflow-x: auto;
+    background-color: white;
 }
 
 .users-table thead tr {
     user-select: none;
-    color: #ffffff;
     background-color: rgba(14, 14, 14, 0.25);
 }
 
 .users-table th,
 .users-table td {
-    padding: 12px 15px;
+    padding: 12px 8px;
 }
 
 .users-table tbody tr {
     border-bottom: 1px solid rgba(14, 14, 14, 0.5);
-}
-
-.users-table tbody tr:nth-of-type(odd) {
-
 }
 
 .users-table tbody tr:last-of-type {
@@ -38,10 +34,9 @@
 }
 
 .users-table button {
-    padding: 8px 16px;
+    padding: 8px 12px;
     background-color: #007bff; /* Blue for other buttons */
     border: none;
-    color: white;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -55,7 +50,6 @@
 /* Change color for the edit button */
 .users-table button.edit {
     background-color: #2c2ca3; /* Light color */
-    color: #ece5e5; /* Dark text color */
 }
 
 .users-table button:hover {
@@ -70,34 +64,17 @@
     background-color: #6c757d; /* Gray */
     cursor: not-allowed;
 }
+
 /* Define additional classes for enable and disable buttons */
 .users-table button.enabled {
     background-color: #a3332b; /* Light green */
-    color: #f3f8f5; /* Dark text color */
 }
 
 .users-table button.disabled {
     background-color: #5e8e3f; /* Light red */
     color: #721c24; /* Dark text color */
 }
-.search-container {
-    position: relative;
-  }
-  
-  .search-input {
-    padding: 2px 36px 8px 12px; /* Adjust padding to accommodate the icon */
-    border-radius: 4px;
-    border: 1px solid #6b6363;
-    background-repeat: no-repeat;
-    background-position: 8px center; /* Adjust the position of the icon */
-  }
-  
-  /* Adjust the size of the icon */
-  .search-input {
-    background-size: 20px; /* Adjust the size of the icon */
-  }
-  
-  
+
 /* Adjust button styles for different screen sizes */
 @media (max-width: 768px) {
     .users-table button {
@@ -106,5 +83,18 @@
       display: block; /* Change to block display for smaller screens */
       margin-bottom: 8px; /* Add margin between buttons for smaller screens */
     }
-  }
-  
+}
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+    .users-table {
+        font-size: 0.8em;
+        width: min(100%, 100%); /* Adjust width for mobile */
+        
+    }
+
+    .users-table th,
+    .users-table td {
+        padding: 10px;
+    }
+}

@@ -43,7 +43,7 @@ const AddClass = () => {
         console.log("teacher",teacher)
         const classdtl={name:name,division:division,teacher:teacher}
       const res = await addClass(classdtl).unwrap();
-      navigate('/class');
+      navigate('/admin/class');
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }

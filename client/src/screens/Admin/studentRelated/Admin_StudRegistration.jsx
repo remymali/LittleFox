@@ -53,7 +53,7 @@ const Admin_StudRegistration = () => {
       const res = await createUser(formData).unwrap();
       //dispatch(setCredentials({ ...res }));
       // Redirect to a different route after successful registration
-      navigate('/student');
+      navigate('/admin/student');
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
@@ -72,7 +72,7 @@ const Admin_StudRegistration = () => {
             onChange={(e) => setName(e.target.value)}
           />
         </Form.Group>
-
+ 
         <Form.Group controlId='email'>
           <Form.Label>Email Address</Form.Label>
           <Form.Control
