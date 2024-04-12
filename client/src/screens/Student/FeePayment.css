@@ -1,0 +1,31 @@
+.payment-details-box {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 70vh;
+    width: 60vw;
+    /* Adjust width for smaller screens */
+    max-width: 300px;
+    /* Limit maximum width for larger screens */
+    padding: 5px;
+}
+
+.fee-history-box {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 20px;
+    display: flex;
+    font-size: 1rem;
+    align-items: center;
+    flex-direction: column;
+    height: 50vh;
+    width: 90vw;
+    /* Adjust width for smaller screens */
+    max-width: 300px;
+    /* Limit maximum width for larger screens */
+    padding: 15px;
+    justify-content: center;
+}

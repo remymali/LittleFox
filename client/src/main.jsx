@@ -101,7 +101,6 @@ const router = createBrowserRouter(
           <Route path='/studMarks' element={<ExamScore/>}/>
           <Route path='/studNotice' element={<StudNotice/>}/>
           <Route path='/studFee' element={<FeePayment/>}/>
-          <Route path='/studFeeHistory' element={<FeeHistory/>}/>
           <Route path='/studChat' element={<StudentChat/>}/>
           <Route path='/teachRating' element={<TeacherRating/>}/>
           <Route path='/starRating' element={<StarRating/>}/>

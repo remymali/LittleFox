@@ -1,0 +1,31 @@
+/* studentAttendance.module.css */
+
+.calendar-container {
+    max-width: 100vw;
+    height: 80vh;
+    margin: 0 auto;
+}
+
+.calendar-title {
+    padding: 1rem;
+    color: white;
+}
+
+.fc-daygrid-day.fc-day,
+.fc-daygrid-day.fc-day.fc-day-today {
+    color: white !important; /* Change the color of the day */
+}
+
+.fc-col-header-cell-cushion,
+.fc-daygrid-day-number {
+    color: white !important; /* Change the color of the date */
+}
+.event-circle {
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}

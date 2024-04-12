@@ -6,7 +6,7 @@ import Calendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { useNavigate } from 'react-router-dom';
-
+import './StudAttendance.css'
 const StudentAttendance = () => {
     const { userInfo } = useSelector((state) => state.auth);
     const navigate = useNavigate();
@@ -31,21 +31,30 @@ const StudentAttendance = () => {
     // Function to customize event content and color based on status
     const eventContent = (arg) => {
         let circleColor = '';
-        let textcolor='#ffffff';
         if (arg.event.backgroundColor === 'green') {
             circleColor = '#28a745'; // Green color for 'Present'
         } else if (arg.event.backgroundColor === 'red') {
             circleColor = '#dc3545'; // Red color for 'Absent'
         }
         return {
-            html: `<div style="color: ${textcolor}; background-color: ${circleColor}; border-radius: 50%; width: 24px; height: 24px; display: flex; justify-content: center; align-items: center;">${arg.event.backgroundColor === 'green' ? 'P' : 'A'}</div>`,
+            html: `<div style="background-color: ${circleColor};">${arg.event.backgroundColor === 'green' ? 'P' : 'A'}</div>`,
         };
+    };
+
+    // Function to apply custom styling to individual days
+    const dayRender = (arg) => {
+        // Customize the style of individual days
+        arg.el.style.color = 'white'; // Set the color of the day
+        const dayElement=arg.el.querySelector('.fc-daygrid-day-number')
+        if (dayElement) {
+            document.getElementsByClassName.dayElement.style.color = 'white'; // Set the color of the day
+        }
     };
 
     return (
         <FormContainer>
-            <h2 className="p-3">Attendance</h2>
-            <div style={{ maxWidth: '100vw', height: '80vh', margin: '0 auto',color:'white' }}>
+            <h2>Attendance</h2>
+            <div className='cal-content'>
                 <Calendar
                     plugins={[dayGridPlugin, interactionPlugin]}
                     initialView="dayGridMonth"
@@ -56,6 +65,7 @@ const StudentAttendance = () => {
                         backgroundColor: record.status === 'Present' ? 'green' : 'red', // Change color based on status
                     }))}
                     eventContent={eventContent} // Apply custom event content
+                    dayRender={dayRender} // Apply custom styling to individual days
                 />
             </div>
         </FormContainer>
