@@ -47,7 +47,7 @@ const StudNotice = () => {
                         {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
                             <button
                                 key={page}
-                                className={`btn btn-outline-secondary me-2 ${currentPage === page ? 'active' : ''}`}
+                                className={`btn btn-outline-info me-2 ${currentPage === page ? 'active' : ''}`}
                                 onClick={() => handlePageChange(page)}
                             >
                                 {page}

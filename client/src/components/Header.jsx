@@ -44,9 +44,6 @@ const StudentHeader = ({ userInfo, logoutHandler }) => (
     <LinkContainer to='/studFee'>
           <Nav.Link><FaSignInAlt /> Fee</Nav.Link>
     </LinkContainer>
-     <LinkContainer to='/studFeeHistory'>
-          <Nav.Link><FaSignInAlt /> FeePaid</Nav.Link>
-    </LinkContainer>
     <LinkContainer to='/studChat'>
           <Nav.Link><FaSignInAlt /> Chat</Nav.Link>
     </LinkContainer>
